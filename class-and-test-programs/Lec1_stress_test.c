@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
   //printf("Enter option: ");
   int arg = atoi (argv[1]);
   if (argc > 2) {
-    printf("Only 1 number must be passed as an argument. 1 for the normal loop and 2 for the stress test.");
+    printf("1 number must be passed as an argument. 1 for the normal loop and 2 for the stress test.");
     return -1;
   }
   if (arg == 2) {
