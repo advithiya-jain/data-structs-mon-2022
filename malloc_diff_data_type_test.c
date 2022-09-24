@@ -20,5 +20,7 @@ int main(int argc, char** argv){
         printf("%d\n", *(b+i));
         i+=4;
     }
+    //getting a weird output where it goes from 0 to 127 then -128, -127, -126... back to 0
+    //this cycle continues till the 999th index
     free(a);
 }
