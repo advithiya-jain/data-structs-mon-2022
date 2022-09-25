@@ -25,9 +25,13 @@ int main(int argc, char** argv) {
   //printf("Option 1: Normal loop that runs 10 times.\nOption 2: Stress test C using decimal values for the loop variable.\n");
   //int option;
   //printf("Enter option: ");
-  int arg = atoi (argv[1]);
-  if (argc > 2) {
-    printf("1 number must be passed as an argument. 1 for the normal loop and 2 for the stress test.");
+  int arg;
+  if (argc >= 2){ //checking if the number of arguments is 2, before accessing the second argument 
+  // (not having this is what caused the segmentation fault error earlier if no arguments were passed).
+    arg = atoi (argv[1]);
+  }
+  if (argc > 2 || argc < 2) {
+    printf("1 number must be passed as an argument. 1 for the normal loop and 2 for the stress test.\n");
     return -1;
   }
   if (arg == 2) {
@@ -37,7 +41,7 @@ int main(int argc, char** argv) {
     normalLoop();
   }
   else{
-    printf("Invalid argument. Allowed Arguments are:\n1 for the normal loop and 2 for the stress test.\n");
+    printf("Invalid argument. Allowed Arguments are:\n1 for the normal loop and \n2 for the stress test.\n");
   }
   return 0;
 }
