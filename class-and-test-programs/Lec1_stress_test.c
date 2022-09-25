@@ -22,9 +22,6 @@ void normalLoop(){
 }
 
 int main(int argc, char** argv) {
-  //printf("Option 1: Normal loop that runs 10 times.\nOption 2: Stress test C using decimal values for the loop variable.\n");
-  //int option;
-  //printf("Enter option: ");
   int arg;
   if (argc >= 2){ //checking if the number of arguments is 2, before accessing the second argument 
   // (not having this is what caused the segmentation fault error earlier if no arguments were passed).
