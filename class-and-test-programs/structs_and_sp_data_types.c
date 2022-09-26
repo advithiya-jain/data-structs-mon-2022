@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int main(int argc, char **argv) {
+int arr_testing() {
     int *a;
     int i, n, val;
     n = 3;
@@ -23,16 +23,21 @@ int main(int argc, char **argv) {
         scanf("%d", &val);
     }
     // this to make sure the number of locations do not exceed the entered +ve numbers. This is to prevent
-    // extra data being printed and allocated to a. 
+    // extra garbage-data being printed and allocated to a. 
     n = i;
     a = realloc(a, n * sizeof(int));
 
-    // Print Data
+    // Printing values of a
     for(i = 0; i < n; i++) {
         printf("%d ", a[i]);
     }
 
     printf("\n\nDone!\n");
 
+    return 0;
+}
+
+int main(int argc, char **argv) {
+    //
     return 0;
 }
