@@ -38,8 +38,6 @@ int arr_testing() {
 }
 
 int main(int argc, char **argv) {
-<<<<<<< HEAD
-=======
     int i, val;
     // holds the first address of struct nodeType (pointer)
     Node * head = NULL;
