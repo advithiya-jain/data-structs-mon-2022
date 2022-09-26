@@ -93,7 +93,7 @@ int bday_rem(char name[], int bday) {
       }
     } 
   }
-  // Making sure the new_name string ends with a \0 so c knows when to stop printnig. This prevents 
+  // Making sure the new_name string ends with a \0 so c knows when to stop printing. This prevents 
   // random data being printed to the end of the string.
   new_name[j] = '\0';
   // Print the new name.
