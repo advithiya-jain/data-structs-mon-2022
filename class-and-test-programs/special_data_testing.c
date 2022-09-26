@@ -53,7 +53,8 @@ int main(int argc, char **argv) {
     Node * temp = NULL;
 
     i = 0;
-
+    
+    scanf("%d", &val);
     while(val > 0) {
         // do stuff
         temp = malloc(sizeof(Node));
@@ -61,6 +62,10 @@ int main(int argc, char **argv) {
         // ` *(temp).value = val; `
         temp->value = val; // does the same thing as the comented code above.
         temp->next = NULL;
+
+        //if this is the first time
+
+        //or else
         
         i++;
         scanf("%d", &val);
