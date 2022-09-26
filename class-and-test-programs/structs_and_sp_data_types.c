@@ -9,16 +9,20 @@ int main(int argc, char **argv) {
 
     // Enter Data
     scanf("%d", &val);
-    i = 0
+    i = 0;
     while(val > 0) {
         // do stuff
         a[i] = val;
         i++;
-        scanf("%d", &val)
+        if(i >= n) {
+            n = n*2;
+            a = (int *) realloc(a, n * sizeof(int));
+        }
+        scanf("%d", &val);
     }
     // Print Data
     for(i = 0; i < n; i++) {
-        printf("%d", a[i]);
+        printf("%d ", a[i]);
     }
 
     printf("\n\nDone!\n");
