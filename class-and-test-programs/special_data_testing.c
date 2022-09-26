@@ -38,11 +38,33 @@ int arr_testing() {
 }
 
 struct nodeType {
-    int val;
+    int value;
     struct nodeType * next;
 };
 
+// making Node a nodeType struct for easier typing. basically a shortcut.
+typedef struct nodeType Node;
+
+
 int main(int argc, char **argv) {
+    int i, val;
+    // holds the first address of struct nodeType
+    Node * head = NULL;
+    Node * temp = NULL;
+
+    i = 0;
+
+    while(val > 0) {
+        // do stuff
+        temp = malloc(sizeof(Node));
+        // *(temp) gives us the actual node itself. then the value inside is accessed and val is stored into it
+        // ` *(temp).value = val; `
+        temp->value = val; // does the same thing as the comented code above.
+        temp->next = NULL;
+        
+        i++;
+        scanf("%d", &val);
+    }
     //
     return 0;
 }
