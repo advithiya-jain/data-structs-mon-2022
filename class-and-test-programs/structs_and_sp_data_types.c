@@ -15,11 +15,18 @@ int main(int argc, char **argv) {
         a[i] = val;
         i++;
         if(i >= n) {
+            // doubling size of array
             n = n*2;
-            a = (int *) realloc(a, n * sizeof(int));
+            // reallocating a to double the size of earlier (size is stored in 'n')
+            a = (int *) realloc(a, n * sizeof(int)); 
         }
         scanf("%d", &val);
     }
+    // this to make sure the number of locations do not exceed the entered +ve numbers. This is to prevent
+    // extra data being printed and allocated to a. 
+    n = i;
+    a = realloc(a, n * sizeof(int));
+
     // Print Data
     for(i = 0; i < n; i++) {
         printf("%d ", a[i]);
