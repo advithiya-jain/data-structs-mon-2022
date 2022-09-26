@@ -37,16 +37,9 @@ int arr_testing() {
     return 0;
 }
 
-struct nodeType {
-    int value;
-    struct nodeType * next;
-};
-
-// making Node a nodeType struct for easier typing. basically a shortcut.
-typedef struct nodeType Node;
-
-
 int main(int argc, char **argv) {
+<<<<<<< HEAD
+=======
     int i, val;
     // holds the first address of struct nodeType
     Node * head = NULL;
