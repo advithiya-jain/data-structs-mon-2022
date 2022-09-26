@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<ctype.h>
 
 // Initialising a 2d-array of the alphabet that will be used to check against the entered string.
 char alph[26][2] = {{'A','a'}, {'B','b'}, {'C','c'}, {'D','d'}, {'E','e'}, {'F','f'}, {'G','g'}, 
