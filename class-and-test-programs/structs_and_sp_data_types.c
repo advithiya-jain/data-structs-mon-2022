@@ -3,15 +3,16 @@
 
 int main(int argc, char **argv) {
     int *a;
-    int n = 10;
-    int i;
+    int i, n;
 
-    a = malloc(n * sizeof(int));
+    // Enter Data
 
+    // Print Data
     for(i = 0; i < n; i++) {
-        a[i] = i;
-        printf("%d\n", a[i]);
+        printf("%d", a[i]);
     }
+
+    printf("\n\nDone!\n");
 
     return 0;
 }
