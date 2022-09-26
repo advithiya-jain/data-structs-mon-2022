@@ -37,6 +37,11 @@ int arr_testing() {
     return 0;
 }
 
+struct nodeType {
+    int val;
+    struct nodeType * next;
+};
+
 int main(int argc, char **argv) {
     //
     return 0;
