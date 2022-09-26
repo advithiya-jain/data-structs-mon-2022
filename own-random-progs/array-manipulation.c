@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<ctype.h>
 
 // Initialising a 2d-array of the alphabet that will be used to check against the entered string.
 char alph[26][2] = {{'A','a'}, {'B','b'}, {'C','c'}, {'D','d'}, {'E','e'}, {'F','f'}, {'G','g'}, 
@@ -14,9 +15,10 @@ int bday_rem(char name[], int bday) {
   // Storing length of the user's name. sizeof() gives the size of the array which is divided by the 
   // size of one element in the array, arr[0] is used for Simplicity.
   int len = strlen(name);
-  int len_copy = len;
   // Stores the character that must be removed.
   char rem[2]={0,0};
+  // Stores new name.
+  char new_name[50];
   // Checking if the date overflows after 26.
   if(bday > 26) {
     bday = bday - 26;
@@ -78,26 +80,22 @@ int bday_rem(char name[], int bday) {
     break;
   }
   int i;
-  int j;
+  int j = 0;
   // Loop to go through the entered name.
   for(i = 0; i < len; i = i + 1) {
-    // Condition to check if the current letter is the one coinciding with the birthday.
-    if(name[i] == rem[0] || name[i] == rem[1]) {
-      // Loop that replaces the i'th element with the one in front of it, 
-      // essentially removes the i'th character.
-      for(j=i; j<len; j++) {
-            name[j] = name[j+1];
-        }
-      // Decreasing len by 1 since 1 character has been removed.
-      len--;
-      // Decreasing i by 1 since the length of the string has also decreased by 1.
-      i--;
-
+    // Condition to check if the current letter is not the one coinciding with the birthday.
+    if(name[i] != rem[0] && name[i] != rem[1]) {
+      if(name[i] != '\n' && name[i] != '\r'){
+        new_name[j] = name[i];
+        j++;
+      }
     } 
   }
+  new_name[j] = '\0';
   // Print the new name.
-  if(len != len_copy){
-    printf("Your new name is: %s\n", name);
+  int new_len = strlen(new_name);
+  if(new_len != len){
+  printf("Your new name is: %s\n", new_name);
   }
   else{
     printf("Your name is still: %s\n", name);
