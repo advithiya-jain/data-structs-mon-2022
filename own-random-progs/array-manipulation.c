@@ -85,12 +85,16 @@ int bday_rem(char name[], int bday) {
   for(i = 0; i < len; i = i + 1) {
     // Condition to check if the current letter is not the one coinciding with the birthday.
     if(name[i] != rem[0] && name[i] != rem[1]) {
+      // Checking to see if the current character is not a 1. return input (Enter), 2. new line.
+      // This is to preserve white-spaces in full names without adding these special characters.
       if(name[i] != '\n' && name[i] != '\r'){
         new_name[j] = name[i];
         j++;
       }
     } 
   }
+  // Making sure the new_name string ends with a \0 so c knows when to stop printnig. This prevents 
+  // random data being printed to the end of the string.
   new_name[j] = '\0';
   // Print the new name.
   int new_len = strlen(new_name);
