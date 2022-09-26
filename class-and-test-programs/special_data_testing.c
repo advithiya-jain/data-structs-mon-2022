@@ -41,15 +41,15 @@ int main(int argc, char **argv) {
 <<<<<<< HEAD
 =======
     int i, val;
-    // holds the first address of struct nodeType
+    // holds the first address of struct nodeType (pointer)
     Node * head = NULL;
+    // temp nodeType pointer.
     Node * temp = NULL;
 
     i = 0;
     
     scanf("%d", &val);
     while(val > 0) {
-        // do stuff
         temp = malloc(sizeof(Node));
         // *(temp) gives us the actual node itself. then the value inside is accessed and val is stored into it
         // ` *(temp).value = val; `
@@ -63,6 +63,5 @@ int main(int argc, char **argv) {
         i++;
         scanf("%d", &val);
     }
-    //
     return 0;
 }
