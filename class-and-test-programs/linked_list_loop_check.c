@@ -27,17 +27,18 @@ void addValue(Node** head_addr, int val) {
 //TODO: Create a function for the user to enter the length of the linked list and enter values into it.
 Node* userLinkedList(Node* head, int n){
     //Initialise variables for: length of list, user input data, head node and temp_node of linked list.
-    int val;
+    int val, i;
     head = NULL;
     //While loop that runs till the user input length of list
-    while(n != 0){
+    i = 0;
+    while(i < n){
         //take user input for the value.
-        printf("Enter value of node: ");
+        printf("Enter value of node %d: ", i+1);
         scanf("%d", &val);
         //call addValue function to add values into the list
         addValue(&head, val);
-        //decrement n by 1 to indicate that a node has been added
-        n--;
+        //increment i by 1 to indicate that a node has been added
+        i++;
     }
     return head;
 
