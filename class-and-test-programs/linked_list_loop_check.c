@@ -23,6 +23,19 @@ void addValue(Node* head_addr, int val) {
     head_addr = temp_node;
 }
 
+//TODO: Create a function for the user to enter the length of the linked list and enter values into it.
+void userLinkedList(){
+    //Initialise variables for:
+    // length of list, user input data, head node and temp_node of the linked list, and a counter i.
+    //Take user input for the length of the list
+    //While loop that runs till the user input length of list
+    while(i < n){
+        //call addValue function to add values into the list
+        //increment i by 1 to indicate that a node has been added
+    }
+
+}
+
 //Function to check if a linked list is looped onto itself.
 int isLooping(Node* linked_list) {
     //Assuming a linked list has been provided of type nodeType with the variable name: linked_list.
