@@ -1,5 +1,6 @@
 #include<stdlib.h>
 
+//Creating a new struct called nodeType to create linked lists with nodes.
 struct nodeType {
     int value;
     struct nodeType* next;
@@ -8,6 +9,21 @@ struct nodeType {
 // making Node a nodeType struct for easier typing. basically a shortcut.
 typedef struct nodeType Node;
 
+//TODO: Create a function that allows me to add values to a linked list using user input to test this
+//      program.
+//The int val will be user input data.
+void addValue(Node* head_addr, int val) {
+    //Allocate a temp node to input values and address into a node.
+    Node* temp_node = malloc(sizeof(Node));
+    //Set value of the node to the argument val
+    temp_node->value = val;
+    //Set address of the next node to the head_addr.
+    temp_node->next = head_addr;
+    //Set the address of the head to the created node.
+    head_addr = temp_node;
+}
+
+//Function to check if a linked list is looped onto itself.
 int isLooping(Node* linked_list) {
     //Assuming a linked list has been provided of type nodeType with the variable name: linked_list.
     //Creating temporary counters to traverse the list.
@@ -32,13 +48,11 @@ int isLooping(Node* linked_list) {
     return 0;
 }
 
-//TODO: Create a function that allows me to add values to a linked list using user input to test this
-//      program.
 int main(int argc, char** argv) {
-    //Assuming a linked list of type nodeType with name linked_list exists.
+    //Assuming a linked list with data of type: nodeType, with name: linked_list, exists.
     Node *linked_list;
     //Creating a loop in the list
-    linked_list->next->next->next->next = linked_list->next->next
+    linked_list->next->next->next->next = linked_list->next->next;
     //Calling isLooping function to check if list is looping.
     if(isLooping(linked_list) == 0) {
         printf("Congratulations! Your linked list does not eat itself! :D");
