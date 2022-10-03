@@ -1,4 +1,5 @@
 #include<stdlib.h>
+#include<stdio.h>
 
 //Creating a new struct called nodeType to create linked lists with nodes.
 struct nodeType {
@@ -12,27 +13,33 @@ typedef struct nodeType Node;
 //TODO: Create a function that allows me to add values to a linked list using user input to test this
 //      program.
 //The int val will be user input data.
-void addValue(Node* head_addr, int val) {
+void addValue(Node** head_addr, int val) {
     //Allocate a temp node to input values and address into a node.
-    Node* temp_node = malloc(sizeof(Node));
+    Node* temp_node = (Node*)malloc(sizeof(Node));
     //Set value of the node to the argument val
     temp_node->value = val;
     //Set address of the next node to the head_addr.
-    temp_node->next = head_addr;
+    temp_node->next = (*head_addr);
     //Set the address of the head to the created node.
-    head_addr = temp_node;
+    (*head_addr) = temp_node;
 }
 
 //TODO: Create a function for the user to enter the length of the linked list and enter values into it.
-void userLinkedList(){
-    //Initialise variables for:
-    // length of list, user input data, head node and temp_node of the linked list, and a counter i.
-    //Take user input for the length of the list
+Node* userLinkedList(Node* head, int n){
+    //Initialise variables for: length of list, user input data, head node and temp_node of linked list.
+    int val;
+    head = NULL;
     //While loop that runs till the user input length of list
-    while(i < n){
+    while(n != 0){
+        //take user input for the value.
+        printf("Enter value of node: ");
+        scanf("%d", &val);
         //call addValue function to add values into the list
-        //increment i by 1 to indicate that a node has been added
+        addValue(&head, val);
+        //decrement n by 1 to indicate that a node has been added
+        n--;
     }
+    return head;
 
 }
 
@@ -63,15 +70,24 @@ int isLooping(Node* linked_list) {
 
 int main(int argc, char** argv) {
     //Assuming a linked list with data of type: nodeType, with name: linked_list, exists.
-    Node *linked_list;
-    //Creating a loop in the list
-    linked_list->next->next->next->next = linked_list->next->next;
+    Node *linked_list = NULL;
+    int n;
+    //Take user input for the length of the list
+    printf("Enter length of linked list: ");
+    scanf("%d", &n);
+    //calling userLinkedList function to take user input for values in the linked list.
+    linked_list = userLinkedList(linked_list, n);
+    //Creating a loop in the list. Assuming the user has entered 3 as the size of the list.
+    //TODO: give an option to create a loop in the list as long as length>1. 
+    //      Here I am looping the list only if length==3.
+    if(n == 3)
+        linked_list->next->next->next = linked_list->next;
     //Calling isLooping function to check if list is looping.
     if(isLooping(linked_list) == 0) {
-        printf("Congratulations! Your linked list does not eat itself! :D");
+        printf("Congratulations! Your linked list does not eat itself! :D \n");
     }
     else {
-        printf("Loop detected! Your linked list is eating itself! :`( ");
+        printf("Loop detected! Your linked list is eating itself! :`( \n");
     }
     return 0;
 }
