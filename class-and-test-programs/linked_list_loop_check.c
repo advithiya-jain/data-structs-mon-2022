@@ -15,7 +15,7 @@ typedef struct nodeType Node;
 //The int val will be user input data.
 void addValue(Node** head_addr, int val) {
     //Allocate a temp node to input values and address into a node.
-    Node* temp_node = (Node*)malloc(sizeof(Node));
+    Node* temp_node = malloc(sizeof(Node));
     //Set value of the node to the argument val
     temp_node->value = val;
     //Set address of the next node to the head_addr.
