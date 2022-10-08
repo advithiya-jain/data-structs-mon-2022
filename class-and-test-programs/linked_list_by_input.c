@@ -55,6 +55,7 @@ void userLinkedList(Node** head, int n){
     }
 }
 
+// Function to print all values of a given linked list
 void printLinked(Node** head) {
     Node *temp = (*head);
     while(temp != NULL){
