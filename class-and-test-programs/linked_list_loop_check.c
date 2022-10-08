@@ -112,5 +112,6 @@ int main(int argc, char** argv) {
     else {
         printf("Loop detected! Your linked list is eating itself! :`( \n");
     }
+    free(linked_list);
     return 0;
 }

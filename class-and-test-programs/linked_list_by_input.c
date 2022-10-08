@@ -87,5 +87,6 @@ int main(int argc, char** argv) {
     printLinked(&linked_list);
     // Print statement for aesthetics
     printf("\b. :D \n");
+    free(linked_list);
     return 0;
 }

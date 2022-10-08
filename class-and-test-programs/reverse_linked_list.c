@@ -124,5 +124,5 @@ int main(int argc, char** argv){
     //printing reversed linked list
     printf("Your reversed linked list is: ");
     printLinked(&rev_list);
-
+    free(rev_list);
 }
