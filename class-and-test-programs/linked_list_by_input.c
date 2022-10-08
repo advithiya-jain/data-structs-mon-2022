@@ -10,6 +10,17 @@ struct nodeType {
 // making Node a nodeType struct for easier typing. basically a shortcut.
 typedef struct nodeType Node;
 
+// Function to print all values of a given linked list
+void printLinked(Node** head) {
+    Node *temp = (*head);
+    int i = 0;
+    while(temp != NULL){
+        printf(i?", %d":"%d", temp->value);
+        temp = temp->next;
+        i++;
+    }
+}
+
 //TODO: Create a function that allows me to add values to a linked list using user input to test this
 //      program.
 //The int val will be user input data.
@@ -55,14 +66,6 @@ void userLinkedList(Node** head, int n){
     }
 }
 
-// Function to print all values of a given linked list
-void printLinked(Node** head) {
-    Node *temp = (*head);
-    while(temp != NULL){
-        printf("%d,", temp->value);
-        temp = temp->next;
-    }
-}
 
 int main(int argc, char** argv) {
     Node *linked_list = NULL;
@@ -86,7 +89,7 @@ int main(int argc, char** argv) {
     printf("Congratulations! Your created linked list is: ");
     printLinked(&linked_list);
     // Print statement for aesthetics
-    printf("\b. :D \n");
+    printf(". :D \n");
     free(linked_list);
     return 0;
 }
