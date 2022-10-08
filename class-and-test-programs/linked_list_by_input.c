@@ -56,7 +56,6 @@ void userLinkedList(Node** head, int n){
 }
 
 int main(int argc, char** argv) {
-    //Assuming a linked list with data of type: nodeType, with name: linked_list, exists.
     Node *linked_list = NULL;
     int n;
     //Take user input for the length of the list
