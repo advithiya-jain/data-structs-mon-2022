@@ -55,6 +55,14 @@ void userLinkedList(Node** head, int n){
     }
 }
 
+void printLinked(Node** head) {
+    Node *temp = (*head);
+    while(temp != NULL){
+        printf("%d,", temp->value);
+        temp = temp->next;
+    }
+}
+
 int main(int argc, char** argv) {
     Node *linked_list = NULL;
     int n;
@@ -65,11 +73,7 @@ int main(int argc, char** argv) {
     userLinkedList(&linked_list, n);
     //printing the created linked llist
     printf("Congratulations! Your created linked list is: ");
-    while (linked_list != NULL)
-    {
-        printf("%d ", linked_list->value);
-        linked_list = linked_list->next;
-    }
+    printLinked(&linked_list);
     // Print statement for aesthetics
     printf("\b. :D \n");
     return 0;
