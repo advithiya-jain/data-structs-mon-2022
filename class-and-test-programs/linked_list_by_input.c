@@ -21,6 +21,16 @@ void printLinked(Node** head) {
     }
 }
 
+//Function to free a Linked list
+void freeLinkedList(Node* head){
+    Node* prevNode;
+    while(head) {
+        prevNode = head;
+        head = head->next;
+        free(prevNode);
+    }
+}
+
 //TODO: Create a function that allows me to add values to a linked list using user input to test this
 //      program.
 //The int val will be user input data.
@@ -90,6 +100,6 @@ int main(int argc, char** argv) {
     printLinked(&linked_list);
     // Print statement for aesthetics
     printf(". :D \n");
-    free(linked_list);
+    freeLinkedList(linked_list);
     return 0;
 }

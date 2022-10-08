@@ -22,6 +22,16 @@ void printLinked(Node** head) {
     printf(". :D\n");
 }
 
+//Function to free a Linked list
+void freeLinkedList(Node* head){
+    Node* prevNode;
+    while(head) {
+        prevNode = head;
+        head = head->next;
+        free(prevNode);
+    }
+}
+
 // Function to add values to the end of the linked list (append)
 void addValue(Node** head_addr, int val) {
     //Allocate a temp node to input values and address into a node.
@@ -126,5 +136,5 @@ int main(int argc, char** argv){
     //printing reversed linked list
     printf("Your reversed linked list is: ");
     printLinked(&rev_list);
-    free(rev_list);
+    freeLinkedList(rev_list);
 }
