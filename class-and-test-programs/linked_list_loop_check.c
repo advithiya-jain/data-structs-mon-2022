@@ -18,10 +18,22 @@ void addValue(Node** head_addr, int val) {
     Node* temp_node = malloc(sizeof(Node));
     //Set value of the node to the argument val
     temp_node->value = val;
-    //Set address of the next node to the head_addr.
-    temp_node->next = (*head_addr);
-    //Set the address of the head to the created node.
-    (*head_addr) = temp_node;
+    //Set address of the next node to NULL to indicate it is the last node.
+    temp_node->next = NULL;
+    //If the current head address is null (i.e the last node) set it to the newly created node
+    if(*head_addr == NULL){
+        *head_addr = temp_node;
+    }
+    //Else we find the previous node and make it point to the newly created node
+    else {
+        Node *prevNode = *head_addr;
+        // loop runs till the 2nd last node (as the lost node will be NULL)
+        while(prevNode->next != NULL) {
+            prevNode = prevNode->next;
+        }
+        //making the prevoius node point to the newly created node.
+        prevNode->next = temp_node;
+    }
 }
 
 //TODO: Create a function for the user to enter the length of the linked list and enter values into it.
