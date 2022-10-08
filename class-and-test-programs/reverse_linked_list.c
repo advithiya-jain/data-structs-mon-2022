@@ -98,10 +98,20 @@ void printLinked(Node** head) {
 
 int main(int argc, char** argv){
     Node *linked_list = NULL;
-    int n;
-    //Take user input for the length of the list
-    printf("Enter length of linked list: ");
-    scanf("%d", &n);
+    int n, flag = 0;
+    // Do while loop to keep asking for input if the list size entered is invalid
+    do{
+        //Take user input for the length of the list
+        printf("Enter length of linked list: ");
+        scanf("%d", &n);
+        if(n <= 0){
+            printf("Invalid list size >:(\n");
+            flag = 1; // set flag to 1 so the loop repeats.
+        }
+        else {
+            flag = 0;
+        }
+    }while(flag == 1);
     //calling userLinkedList function to take user input for values in the linked list.
     userLinkedList(&linked_list, n);
     //Printing original Linked List
