@@ -10,6 +10,18 @@ struct nodeType {
 // making Node a nodeType struct for easier typing. basically a shortcut.
 typedef struct nodeType Node;
 
+// Function to print all values of a given linked list
+void printLinked(Node** head) {
+    Node *temp = (*head);
+    int i = 0;
+    while(temp != NULL){
+        printf(i?", %d":"%d", temp->value);
+        temp = temp->next;
+        i++;
+    }
+    printf(". :D\n");
+}
+
 // Function to add values to the end of the linked list (append)
 void addValue(Node** head_addr, int val) {
     //Allocate a temp node to input values and address into a node.
@@ -84,16 +96,6 @@ Node* reverseLinkedList(Node **head_addr) {
     }
     (*head_addr) = prevNode;
     return (*head_addr);
-}
-
-// Function to print all values of a given linked list
-void printLinked(Node** head) {
-    Node *temp = (*head);
-    while(temp != NULL){
-        printf("%d,", temp->value);
-        temp = temp->next;
-    }
-    printf("\b. :D\n");
 }
 
 int main(int argc, char** argv){
