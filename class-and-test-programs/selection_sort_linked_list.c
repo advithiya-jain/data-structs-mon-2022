@@ -19,6 +19,7 @@ void printLinked(Node** head) {
         temp = temp->next;
         i++;
     }
+    printf(". :D\n");
 }
 
 //Function to free a Linked list
@@ -57,7 +58,7 @@ void addValue(Node** head_addr, int val) {
 
 // Function that takes in user input for linked list values and creates a linked list.
 void userLinkedList(Node** head, int n){
-    //Initialise variables for: length of list, user input data, head node and temp_node of linked list.
+    //Initialise variables for: length of list, user input value, head node and temp_node of linked list.
     int val, i;
     //head = NULL;
     //While loop that runs till the user input length of list
@@ -76,7 +77,32 @@ void userLinkedList(Node** head, int n){
 
 //TODO: Make a function selectSortLinked(Node** head) that selection sorts a given linked list.
 void selectSortLinked(Node** head) {
-    
+    // Using a temporary node and a temp variable
+    Node* temp = *head;
+    int t = 0;
+    //Runs till the end of the list
+    while(temp != NULL) {
+        //Initialising the values for the minimum value & the nextNode i.e. j+1 in a normal selection sort
+        Node* min_val = temp;
+        Node* nextNode = temp->next;
+        //Runs from the nextNode till the end of the list, 
+        while(nextNode != NULL) {
+            //Checking if the minimum value is greater than the current(nextNode's) value
+            if(min_val->value > nextNode->value) {
+                //Updating the minimum value if it is true
+                min_val = nextNode;
+            }
+            //Updating the value of the current(nextNode)
+            nextNode = nextNode->next;
+        }
+
+        //Swapping values after the inner loop has run.
+        t = temp->value;
+        temp->value = min_val->value;
+        min_val->value = t;
+        //Updating the temp node to point to the next node (move forward in the list to sort)
+        temp = temp->next;
+    }
 }
 
 
@@ -99,10 +125,13 @@ int main(int argc, char** argv) {
     //calling userLinkedList function to take user input for values in the linked list.
     userLinkedList(&linked_list, n);
     //printing the created linked llist
-    printf("Congratulations! Your created linked list is: ");
+    printf("Your created linked list is: ");
     printLinked(&linked_list);
-    // Print statement for aesthetics
-    printf(". :D \n");
+    //Sorting the list
+    selectSortLinked(&linked_list);
+    //printing the sorted list
+    printf("Congratulations! Your sorted list is: ");
+    printLinked(&linked_list);
     freeLinkedList(linked_list);
     return 0;
 }
