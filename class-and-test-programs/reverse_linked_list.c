@@ -79,7 +79,7 @@ void userLinkedList(Node** head, int n){
 TODO: Create a function that takes a linked list as an input, reverses it and returns a reversed list.
 preliminary Algorithm: 
     initialise 3 nodes: the current node, the node before that, and the node after.
-    # Run a loop till the current loop is NULL
+    # Run a loop till the current node is NULL
     while (current node != NULL):
         # make the next node point to the node after current
         nextNode = currentNode->nextNode
