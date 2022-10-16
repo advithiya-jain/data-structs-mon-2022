@@ -6,13 +6,61 @@ struct node {
     int val;
     struct node* next;
 };
-
+// Defining a node struct to be used for queues.
 typedef struct node node;
 
-typedef struct {
+typedef struct queue{
     node* head;
     node* tail;
-} queue;
+} queue; // Defining and typedef a struct queue. A queue has a head and a tail which are of both type struct node
+
+/**
+ * ! Function to initialise an empty queue
+ * we set head and tail to NULL, as currently the queue is empty. This makes it easier to create new queues.
+*/
+void initQueue(queue* q){
+    q->head = NULL;
+    q->tail = NULL;
+}
+
+/**
+ * ! Function to add items to the queue
+ * @param val is the int to be added to the queue
+ * @param q is the queue to be enqueued.
+*/
+void enqueue(queue* q, int val) {
+    node* temp = malloc(sizeof(node)); // Allocating space for a new node in the queue
+    temp->val = val; // setting the value of this new node as val
+    temp->next = NULL; // The next node should be null as this is going to be the new 'tail'
+
+    // If there is a pre existing tail, we have to make it point to this new tail.
+    if (q->tail) { q->tail->next = temp; }
+    // Now we update the tail to be this new node, as we are adding it to the end of the queue.
+    q->tail = temp;
+    //Now we need to check if we enqueued to an empty list
+    // if it is then we have to set the head to point to this node as well. As there is only 1 node in the queue.
+    if(q->head == NULL) {q->head = temp;} 
+}
+
+/**
+ * ! Function to remove items from the queue
+ * @param q is the passed q we have to dequeue.
+ * * There is no @param val here since we are removing a node and returning the value at that node (return type int).
+ * ? Need to figure out a way to store negative integers and still throw an error if the queue is empty
+*/
+int dequeue(queue* q){
+    int val; // Used to store the value that has been dequeued.
+    // If the queue is empty i.e. head is null then we return -1 to indicate a failure in dequeueing.
+    if(q->head == NULL) {return -1;}
+    
+    val = q->head->val; // Storing the value at the head in val to be returned later.
+    //Now we have to dequeue the queue and 'remove' the head.
+    q->head = q->head->next; // making head point to the next value as the current one has been removed.
+    // If this is now an empty queue after dequeueing then we have to reset the head and tail to NULL;
+    if(q->head == NULL) {q->tail == NULL;}
+
+    return val; //returning the value from the node that was dequeued.
+}
 
 // ! Function to generate an array of given size 'n'
 int* generateArray(int n) {
