@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 
+/*************************************************** FOR QUEUES *****************************************************/
 struct node {
     int val;
     struct node* next;
@@ -18,9 +19,10 @@ typedef struct queue{
  * ! Function to initialise an empty queue
  * we set head and tail to NULL, as currently the queue is empty. This makes it easier to create new queues.
 */
-void initQueue(queue* q){
+queue* initQueue(queue* q){
     q->head = NULL;
     q->tail = NULL;
+    return q;
 }
 
 /**
@@ -57,10 +59,17 @@ int dequeue(queue* q){
     //Now we have to dequeue the queue and 'remove' the head.
     q->head = q->head->next; // making head point to the next value as the current one has been removed.
     // If this is now an empty queue after dequeueing then we have to reset the head and tail to NULL;
-    if(q->head == NULL) {q->tail == NULL;}
+    if(q->head == NULL) {q->tail = NULL;}
 
     return val; //returning the value from the node that was dequeued.
 }
+
+/**
+ * ! Function to check if a queue is empty
+ * @return bool type, true if the queue is empty, else false
+*/
+
+/************************************************** END OF QUEUE ****************************************************/
 
 // ! Function to generate an array of given size 'n'
 int* generateArray(int n) {
@@ -76,6 +85,40 @@ int* generateArray(int n) {
 }
 
 /**
+ * ! Function to generate a queue from an array 'a' of size 'n'
+ * @return queue*, to return  the genereated queue
+*/
+queue* queueFromArray(int* a, int n){
+    queue* q = malloc(sizeof(queue));
+    q = initQueue(q);
+    if(n > 0){
+        // Starting i from first index of array until the last index
+        for (int i = 0; i < n; i++)
+        {
+            enqueue(q, a[i]);
+        }
+    }
+    return q;
+}
+
+/**
+ * ! Function to generate a queue from an array 'a' of size 'n' in reverse
+ * @return queue*, to return  the genereated queue
+*/
+queue* queueFromArrayReverse(int* a, int n){
+    queue* q = malloc(sizeof(queue));
+    q = initQueue(q);
+    if(n > 0){
+        // Starting i from the last index (n-1) and going to the first index.
+        for (int i = n-1; i >= 0; i--)
+        {
+            enqueue(q, a[i]);
+        }
+    }
+    return q;
+}
+
+/**
  * ! Function to print an array
  * @param a here is a an integer array (or int pointer to the first index of array 'a')
 */ 
@@ -83,10 +126,24 @@ void printArray(int* a, int n) {
 
     for (int i = 0; i < n; i++)
     {
-        printf(i?", %d":"%d", a[i]);
+        printf(i?" [%d]":"[%d]", a[i]);
     }
     printf(". :D\n");
     
+}
+
+/**
+ * ! Function to print a queue
+ * @param q is the queue that is to be printed (we have to dequeue to print)
+*/
+void printQueue(queue* q) {
+    int val;
+    while(q->head){
+        val = dequeue(q);
+        printf((q->head == NULL && q->tail == NULL)?"%d":"%d->", val);
+    }
+    //printf("\b");
+    printf(".\n");
 }
 
 int main(int argc, char** argv) {
@@ -101,6 +158,22 @@ int main(int argc, char** argv) {
         if(n < 1) {flag = 1; printf("Invalid Input >:C\n");}
 
     }while(flag == 1);
+    // generating an array with random 
+    int *a = generateArray(n);
+    // Printing the array to show the values
+    printf("\nYour generated array is: ");
+    printArray(a, n);
+    // generating the queue to be tested
+    queue* q = queueFromArray(a, n);
+    // dequeueing values by printing to test
+    printf("\nYour generated queue is: ");
+    printQueue(q);
+    // generating a reversed version of the array into a queue
+    q = queueFromArrayReverse(a, n);
+    // printing the reversed queue
+    printf("\nYour reversed version of the queue is: ");
+    printQueue(q);
 
+    free(q);
     return 0;
 }
