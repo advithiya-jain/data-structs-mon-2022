@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #include<time.h>
 
 /*************************************************** FOR QUEUES *****************************************************/
@@ -68,6 +69,10 @@ int dequeue(queue* q){
  * ! Function to check if a queue is empty
  * @return bool type, true if the queue is empty, else false
 */
+bool isEmpty(queue* q){
+    if(q->head == NULL && q->tail == NULL) {return true;}
+    else {return false;}
+}
 
 /************************************************** END OF QUEUE ****************************************************/
 
@@ -128,7 +133,7 @@ void printArray(int* a, int n) {
     {
         printf(i?" [%d]":"[%d]", a[i]);
     }
-    printf(". :D\n");
+    printf(" :D\n");
     
 }
 
@@ -140,10 +145,10 @@ void printQueue(queue* q) {
     int val;
     while(q->head){
         val = dequeue(q);
-        printf((q->head == NULL && q->tail == NULL)?"%d":"%d->", val);
+        printf(isEmpty(q)?"%d":"%d->", val);
     }
     //printf("\b");
-    printf(".\n");
+    printf(" :DD\n");
 }
 
 int main(int argc, char** argv) {
@@ -171,7 +176,7 @@ int main(int argc, char** argv) {
     // generating a reversed version of the array into a queue
     q = queueFromArrayReverse(a, n);
     // printing the reversed queue
-    printf("\nYour reversed version of the queue is: ");
+    printf("\nYour (array) reversed version of the queue is: ");
     printQueue(q);
 
     free(q);
