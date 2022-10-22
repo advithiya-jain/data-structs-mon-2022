@@ -14,10 +14,10 @@ typedef struct node {
 */
 node* createNode(int val) {
 	node* root = malloc(sizeof(node));
-	root->val = val;
-	root->left = NULL;
+	root->val = val; // storing the value at the current node
+	root->left = NULL; // setting the left and right branches to NULL
 	root->right = NULL;
-	return root;
+	return root; // returning the newly created node.
 }
 
 /**
@@ -68,6 +68,7 @@ void printInorder(node* root) {
 
 /**
  * ! Function to generate a binary search tree from a given array 'a' of size 'n'
+ * TODO: generate using the mean element as the root node.
 */
 node* generateBST(node* root, int* a, int n) {
 	root = insert(root, a[0]); // Inserting the first element of the array as the root
