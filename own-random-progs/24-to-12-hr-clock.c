@@ -69,12 +69,16 @@ int main(){
                 if(hours > 12 && hours < 24) {
                     hours = hours-12;
                     // Printing the time in 12 hr format. This is done here to make the AM/PM result
-                    // easier to print. 
-                    printf("%d:%d PM\n", hours, mins);
+                    // easier to print.
+                    // If the mins are greater than 9 i.e. double digit we print it as it is
+                    if(mins > 9) printf("%d:%d PM\n", hours, mins);
+                    // else it is single digit so we add a 0 in front
+                    else         printf("%d:0%d PM\n", hours, mins);
                 }
                 else {
                     // No conversion needed if hours is < 12 and > 0.
-                    printf("%d:%d AM\n", hours, mins);
+                    if(mins > 9) printf("%d:%d AM\n", hours, mins); // Same logic as line 73
+                    else         printf("%d:0%d AM\n", hours, mins);
                 }
                 flag = 0; // Setting flag to 0 so that the loop will exit.
 
