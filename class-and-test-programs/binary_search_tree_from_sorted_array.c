@@ -254,7 +254,7 @@ int main(int argc, char** argv){
 
 	/**
 	 * ! To search for an element.
-	 * ! Uncomment this out and comment out lines 265-269 to use
+	 * ! Uncomment this out and comment out lines 264-269 to use
 
 	node* test; // Initialising a test node to be used to check if the BST contains the search element.
 	if(test = searchBST(root, s)) printf("\nCongratulations! The element %d exists in the array! :D\n", s);
