@@ -38,12 +38,12 @@ node* searchBST(node* root, int s){
 /**
  * ! Function to insert an integer value 'val' into a given binary search tree
 */
-node* insert(node* root, int val) {
+node* insertBST(node* root, int val) {
 
 	if(root==NULL) return createNode(val);
 
-	if (val < root->val) root->left = insert(root->left , val);
-	else if (val > root->val) root->right = insert(root->right, val);
+	if (val < root->val) root->left = insertBST(root->left , val);
+	else if (val > root->val) root->right = insertBST(root->right, val);
 
 	return root;
 }
@@ -84,30 +84,6 @@ void printInorder(node* root) {
 void quickSort(int* a, int low, int high);
 
 /**
- * ! Function to generate a binary search tree from a given array 'a' of size 'n'
- * * always produces a near-degenerate BST, this was a naïve approach.
- * ! This function is not correct and only exists here as a record of my progression
-*/
-node* generateBSTSortedOld(node* root, int* a, int n) {
-	int* sorted = a;
-	quickSort(sorted, 0, n-1); // sorting the array to find the mean value
-
-	int t;
-	if(n % 2 == 0) t = (n / 2) - 1; // if n is even the mid point of the array is n/2 - 1
-	else t = ((n + 1) / 2) - 1; // if n is odd the mid point is at n+1/2 - 1
-
-	root = insert(root, sorted[t]); // Inserting the mean/mid element of the array as the root
-
-	// generating the tree by inserting the i'th element of the array
-	// except for the t'th element as that has already been inserted
-	for(int i = 0; i < n; i++){
-		if(i != t) insert(root, sorted[i]);
-	}
-	// Finally return the generated tree.
-	return root;
-}
-
-/**
  * ! Function to generate a balanced BST using a sorted array for input elements
  * * Recursively adds elements to the tree by: 
  * * 1. first using the mid element as the root and then
@@ -135,6 +111,76 @@ node* generateBST(int* a, int n) {
 	quickSort(sorted, 0, n-1);
 	
 	return generateBSTSorted(sorted, 0, n-1);
+}
+
+/**
+ * ! Function to find the 'successor' value of a node in a BST
+ * @param root struct node* type - The node whose successor is to be found
+ * @return int - Returns an int, which is the successor value of the node passed
+*/
+int nodeSuc(node* root) {
+
+	// Since we are looking for the successor of the root,
+	// we have to move to the right branch which will have values larger than the current node
+	root = root->right;
+	// Now we loop untill we reach the 1 node before the end of the left branch
+	// and keep traversing the left branch till then
+	while (root->left) root = root->left;
+	// After the loop has ended we have reached the value that is the successor of the current node value
+	return root->val; // So we just return the value at the current node.
+
+}
+
+/**
+ * ! Fucntion to find the 'predecessor' value of a node in a BST
+ * @param root struct node* type - The node whose predecessor is to be found
+ * @return int - Returns an int, which is the predecessor value of the node passed
+*/
+int nodePre(node* root){
+
+	// Since we are looking for the predecessor of the root,
+	// we have to move to the left branch which will have values smaller than the current node
+	root = root->left;
+	// Now we loop untill we reach the 1 node before the end of the right branch
+	// and keep traversing the right branch till then
+	while (root->right) root = root->right;
+	// After the loop has ended we have reached the value that is the predecessor of the current node value
+	return root->val; // So we just return the value at the current node.
+
+}
+
+/**
+ * ! Function to delete a specific element from a binary search tree.
+ * * Recursive function that will also restructure the tree if the element deleted has children (or if it is the root).
+ * @param root is the node address of the root element of the tree
+ * @param se is the search element to be deleted
+ * @return struct node* - Returns a node address type with the search element deleted from it
+*/
+node* deleteTreeNode(node* root, int se) {
+	// If the root is NULL i.e. and empty tree we just return it back as there is nothing to be deleted.
+	if (root == NULL) return root;
+	// If the search element is smaller than the current value, we start deletion from the left branch
+	if (se < root->val) root->left = deleteTreeNode(root->left, se);
+	// If the search element is greater, than we start deletion again from the right branch
+	else if (se > root->val) root->right = deleteTreeNode(root->right, se);
+	// Otherwise the search element is the same as the root of the tree
+	else {
+		// We first check if the root has any children, if no then we just set it to NULL
+		if (root->left == NULL && root->right == NULL) root = NULL;
+		// else if we have a right branch then we recursively replace the current node with the successor value
+		else if (root->right) { 
+			root->val = nodeSuc(root);
+			root->right = deleteTreeNode(root->right, root->val);
+		}
+		// otherwise we have a left branch only so we recursively replace the current node with the predecessor value
+		else {
+			root->val = nodePre(root);
+			root->left = deleteTreeNode(root->left, root->val);
+		}
+	}
+	// Now we return the modified tree (this will be used by recursive calls as well so we return the whole node)
+	return root;
+
 }
 
 // ! Function to free memory allocated to a BST.
@@ -267,6 +313,13 @@ int main(int argc, char** argv){
 	// Print the generated tree 
 	printf("\nYour generated tree from the array is: \n");
 	printHorizontal(root, 0); // giving an initial distance of 0 as the first element must print on the left
+
+	printf("Enter an element to be deleted from the array: ");
+	scanf("%d", &s);
+
+	root = deleteTreeNode(root, s);
+	printf("\nYour new tree is: \n");
+	printHorizontal(root, 0);
 
 	free(a); // freeing memory allocated to the array.
 	freeTree(root); // freeing memory allocated to the tree.
