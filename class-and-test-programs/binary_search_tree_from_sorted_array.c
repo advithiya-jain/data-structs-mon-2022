@@ -38,12 +38,12 @@ node* searchBST(node* root, int s){
 /**
  * ! Function to insert an integer value 'val' into a given binary search tree
 */
-node* insert(node* root, int val) {
+node* insertBST(node* root, int val) {
 
 	if(root==NULL) return createNode(val);
 
-	if (val < root->val) root->left = insert(root->left , val);
-	else if (val > root->val) root->right = insert(root->right, val);
+	if (val < root->val) root->left = insertBST(root->left , val);
+	else if (val > root->val) root->right = insertBST(root->right, val);
 
 	return root;
 }
@@ -96,12 +96,12 @@ node* generateBSTSortedOld(node* root, int* a, int n) {
 	if(n % 2 == 0) t = (n / 2) - 1; // if n is even the mid point of the array is n/2 - 1
 	else t = ((n + 1) / 2) - 1; // if n is odd the mid point is at n+1/2 - 1
 
-	root = insert(root, sorted[t]); // Inserting the mean/mid element of the array as the root
+	root = insertBST(root, sorted[t]); // Inserting the mean/mid element of the array as the root
 
 	// generating the tree by inserting the i'th element of the array
 	// except for the t'th element as that has already been inserted
 	for(int i = 0; i < n; i++){
-		if(i != t) insert(root, sorted[i]);
+		if(i != t) insertBST(root, sorted[i]);
 	}
 	// Finally return the generated tree.
 	return root;
