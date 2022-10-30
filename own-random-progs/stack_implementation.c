@@ -10,6 +10,11 @@ typedef struct node {
     struct node* next;
 }node;
 
+// ! Function to check if a stack is empty
+bool isEmpty(node* top) {
+    return (top == NULL);
+}
+
 /**
  * ! Function to add values to the stack
  * *Stacks work in accordance with the LIFO (Last in First Out) rule.
@@ -42,7 +47,7 @@ bool push(node** top, int val) {
  * it returns a INT64_MIN value if the stack is empty).
 */
 long long int pop(node** top) {
-    if((*top)== NULL) return INT64_MIN; // Return the minimum long long int value if the stack is empty.
+    if(isEmpty((*top))) return INT64_MIN; // Return the minimum long long int value if the stack is empty.
     // else the stack isn't empty so we pop the first value.
     
     // since the value in the stack is an int we have to type case it to a long long int to store the result
@@ -58,7 +63,7 @@ long long int pop(node** top) {
  * ! Function to print the values of the stack
 */
 void printStack(node* top) {
-    if (top == NULL) printf("\nThe stack is currently empty.\n");
+    if (isEmpty(top)) printf("\nThe stack is currently empty.\n");
     else {
         printf("\n");
         while(top) {
@@ -102,8 +107,16 @@ int main(int argc, char** argv) {
             case 3: printStack(stack);
                     break;
 
-            case 4: while((t = pop(&stack)) != INT64_MIN);
-
+            case 4: // If the stack is not empty, we free it.
+                    if(!(isEmpty(stack))) {
+                        // Emptying the stack using the pop function in a while loop
+                        while((t = pop(&stack)) != INT64_MIN);
+                        printf("\nThe stack has been emptied.\n");
+                    }
+                    // Else the stack is already empty.
+                    else printf("\nThe stack is already empty.\n");
+                    break;
+                    
             case 5: break;
             
             default: printf("\nInvalid option entered! >:C\n");
