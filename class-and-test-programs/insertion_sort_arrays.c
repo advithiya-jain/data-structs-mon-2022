@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
     a = generateArray(n);
     printf("\nYour randomly generated array is: ");
     printArray(a, n); // Printing the array
-    // Selection sorting the array
+    // Insertion sorting the array
     insertionSort(a, n);
     // Printing the sorted array
     printf("\nYour insertion sorted array is: ");
