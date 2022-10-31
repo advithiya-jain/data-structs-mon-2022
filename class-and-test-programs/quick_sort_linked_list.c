@@ -160,7 +160,7 @@ int main(int argc, char** argv) {
     while(last->next != NULL) {
         last = last->next;
     }
-    //calling quickSort function to sort the linked list
+    //calling quickSortLinked function to sort the linked list
     quickSortLinked(linked_list, last);
     //printing the sorted linked list
     printf("Your sorted linked list is: ");
