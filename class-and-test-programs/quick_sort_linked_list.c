@@ -32,9 +32,11 @@ void freeLinkedList(Node* head){
     }
 }
 
-//TODO: Create a function that allows me to add values to a linked list using user input to test this
-//      program.
-//The int val will be user input data.
+/**
+ * ! Function to add/append values to a linked list
+ * @param head is a pointer to the head of the linked list
+ * @param value is the value to be added to the linked list
+ * */ 
 void addValue(Node** head_addr, int val) {
     //Allocate a temp node to input values and address into a node.
     Node* temp_node = malloc(sizeof(Node));
