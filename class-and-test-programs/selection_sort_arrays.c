@@ -43,7 +43,6 @@ void swap (int* a, int* b){
  * @param a is the array to be sorted
  * @param n is the size of the array
 */
-//function to sort the array
 void selectionSort(int* a, int n) {
     int min_index; // variable to store the index of the minimum value
     for (int i = 0; i < n-1; i++) // loop to iterate through the array
