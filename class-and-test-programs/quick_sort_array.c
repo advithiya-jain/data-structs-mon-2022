@@ -69,6 +69,7 @@ int quickPartition(int* a, int lower, int higher) {
  * ! It's void since it takes in a pointer(values will be modified while the pointer remains the same)
 */
 void quickSort(int* a, int low, int high) {
+    if(!a || low >= high) return;
     // Only recurses if the low index is before the high question
     if (low < high) {
         int p = quickPartition(a, low, high); // Partitioning the array and storing the wall in p
@@ -97,7 +98,6 @@ int main(int argc, char** argv) {
     a = generateArray(n);
     printf("\nYour randomly generated array is: ");
     printArray(a, n);
-
     quickSort(a, 0, n-1);
     printf("\nYour quick sorted array is: ");
     printArray(a, n);

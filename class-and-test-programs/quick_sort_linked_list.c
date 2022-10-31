@@ -124,8 +124,9 @@ Node* partition(Node* head, Node* last) {
  * @param higher takes in the higher index to end with
 */
 void quickSortLinked(Node* head, Node* last){
-    // If the head node is the last node currently then we return, the sorting is complete.
-    if (head == last) return;
+    // If the head node is the last node currently then we return, the sorting is complete. 
+    // Or the head is NULL, so the list is empty.
+    if (head == last || !head) return;
     // Setting the pivot node as the value recieved from the partition function.
     Node* pivot = partition(head, last);
     // If the pivot node is not NULL we recursively call the quickSort from the node after the pivot till the last node
