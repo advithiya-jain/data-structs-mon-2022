@@ -45,11 +45,9 @@ void swap (int* a, int* b){
 */
 void selectionSort(int* a, int n) {
     int min_index; // variable to store the index of the minimum value
-    for (int i = 0; i < n-1; i++) // loop to iterate through the array
-    {
+    for (int i = 0; i < n-1; i++) { // loop to iterate through the array
         min_index = i; // setting the minimum index to the current index
-        for (int j = i+1; j < n; j++) // loop to iterate through the array from the next index
-        {
+        for (int j = i+1; j < n; j++) { // loop to iterate through the array from the next index
             if(a[j] < a[min_index]) { // if the value at the current index is lesser than the value at the minimum index
                 min_index = j; // we set the minimum index to the current index
             }
