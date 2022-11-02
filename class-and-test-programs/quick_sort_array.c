@@ -85,6 +85,8 @@ int main(int argc, char** argv) {
     int *a;
     int n, flag = 0;
 
+    srand(time(NULL)); // Initialising srand to use the current time in seconds as the seed.
+
     do {
         printf("Enter size of array: ");
         scanf("%d", &n);
