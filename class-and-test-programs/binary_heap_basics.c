@@ -6,6 +6,7 @@
 /**
  * ! Function to print an array
  * @param a here is a an integer array (or int pointer to the first index of array 'a')
+ * @param n is the size of the array
 */ 
 void printArray(int* a, int n) {
 
@@ -124,6 +125,12 @@ void generateHeap(int* heap, int n) {
     }
 }
 
+/**
+ * ! Function to generate a heap of size n based on user input n
+ * @param n is address to the earlier value of n.
+ * * A pointer to n is passed so that the value of n can be changed in the function.
+ * * This is done as there is a re-generation of the heap option in the main function.
+*/
 int* userHeapGeneration(int *n) {
     int flag = 0;
     // Using a do while loop to keep asking for input if an invalid size in entered
@@ -134,6 +141,7 @@ int* userHeapGeneration(int *n) {
             printf("Invalid size! >:C\n");
             flag = 1;
         }
+        else flag = 0;
     } while (flag == 1);
     
     // Initializing the heap array with the size n
@@ -152,7 +160,8 @@ int main(int argc, char** argv) {
     // opt is the option selected by the user in the menu below.
     // n is the size of the array, 
     // val is used to store the value to be inserted into the heap
-    int opt, n, val;
+    // t is a temp variable used for emptying the heap.
+    int opt, n, val, t;
     int* heap = NULL; // Initializing the heap array to NULL
 
     srand(time(NULL)); // Initialising srand to use the current time in seconds as the seed
@@ -193,12 +202,10 @@ int main(int argc, char** argv) {
                     }
                     // Else empty the heap
                     else {
-                        // Loop that runs till n = 0
-                        while (n != 0) {
-                            // extract the min value from the heap, since this changes the size of the heap,
-                            // n will eventually become 0 and the loop will end.
-                            heapExtract_min(heap, &n);
-                        }
+                        // Loop that runs till n = 0.
+                        // Extract the min value from the heap, since this changes the size of the heap,
+                        // n will eventually become 0 and the function will then return an INT32_MAX.
+                        while ((t = heapExtract_min(heap, &n))!= INT32_MAX);
                         printf("\nThe heap has been emptied! :D\n");
                     }
                     break;
