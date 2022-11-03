@@ -33,6 +33,10 @@ void swap(int *x, int *y) {
 }
 
 /**
+ * TODO: Implement heap sort
+*/
+
+/**
  * ! Function to heapify the tree from the top to bottom of the tree
  * @param heap is the binary heap organised array 
  * @param n is the size of the heap
