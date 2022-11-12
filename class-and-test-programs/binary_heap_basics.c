@@ -183,7 +183,7 @@ int main(int argc, char** argv) {
                     heap = userHeapGeneration(&n);
                     break;
             case 2: // Extracting the min value from the heap
-                    heapExtract_min(heap, &n);
+                    printf("\nThe min value of: %d has been extracted\n", heapExtract_min(heap, &n));
                     break;
             case 3: // Inserting a value into the heap
                     printf("Enter the value to be inserted: ");
