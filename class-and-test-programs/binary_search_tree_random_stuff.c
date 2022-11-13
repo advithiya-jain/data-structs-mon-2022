@@ -123,8 +123,7 @@ int nodeSuc(node* root) {
 	// Since we are looking for the successor of the root,
 	// we have to move to the right branch which will have values larger than the current node
 	root = root->right;
-	// Now we loop untill we reach the 1 node before the end of the left branch
-	// and keep traversing the left branch till then
+	// Now we loop untill we reach end of the left branch and keep traversing the left branch till then
 	while (root->left) root = root->left;
 	// After the loop has ended we have reached the value that is the successor of the current node value
 	return root->val; // So we just return the value at the current node.
@@ -141,8 +140,7 @@ int nodePre(node* root){
 	// Since we are looking for the predecessor of the root,
 	// we have to move to the left branch which will have values smaller than the current node
 	root = root->left;
-	// Now we loop untill we reach the 1 node before the end of the right branch
-	// and keep traversing the right branch till then
+	// Now we loop untill we reach the end of the right branch and keep traversing the right branch till then
 	while (root->right) root = root->right;
 	// After the loop has ended we have reached the value that is the predecessor of the current node value
 	return root->val; // So we just return the value at the current node.
@@ -178,7 +176,7 @@ node* deleteTreeNode(node* root, int se) {
 			root->left = deleteTreeNode(root->left, root->val);
 		}
 	}
-	// Now we return the modified tree (this will be used by recursive calls as well so we return the whole node)
+	// Now we return the modified tree (this will be used by recursive calls as well so we return the node)
 	return root;
 
 }
