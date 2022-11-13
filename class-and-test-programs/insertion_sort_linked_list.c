@@ -105,8 +105,8 @@ void insertionSortLinked(Node** head) {
         // set the head to be the nextNode (move forward in the list)
         (*head) = nextNode; 
     }
-    // after the main loop is finished, the array is sorted so we set the given head to the sortedHead.
-    (*head) = sortedHead;
+    // after the main loop is finished, the array is sorted so we set the given head to the node after the sortedHead (as the sortedHead holds some garbage value).
+    (*head) = sortedHead->next;
 }
 
 
