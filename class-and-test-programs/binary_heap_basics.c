@@ -118,15 +118,28 @@ int heapExtract_min(int* heap, int* n) {
 }
 
 /**
+ * ! Function to heapSort a binary heap organised array
+ * @param heap is the array to be sorted
+ * @param n is the size of the array
+*/
+void heapSort(int* heap, int n) {
+    for(int i = n/2 - 1; i >= 0; i--) {
+        heapifyDown(heap, n, i);
+    }
+    
+}
+
+/**
  * ! Function to generate a min heap array with random values
  * @param heap is the array to be generated
  * @param n is the size of the array
 */
 void generateHeap(int* heap, int n) {
     for (int i = 0; i < n; i++) {
-        // Generating a random number between 0 and 99 and inserting it into the heap
-        heapInsert(heap, i, rand()%100);
+        heap[i] = rand() % 100;
     }
+
+    heapSort(heap, n);
 }
 
 /**
