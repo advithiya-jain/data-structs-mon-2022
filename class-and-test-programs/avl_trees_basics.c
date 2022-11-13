@@ -65,7 +65,7 @@ tNode* rotateLeft(tNode* root) {
     tNode* temp = cnode->left; // temp value to store the left child of the right child of the root to be rotated
 
     // if the root of the sub-tree to be rotated is NULL, it does not exist so we just return NULL.
-    //if (cnode == NULL) return NULL;
+    if (cnode == NULL) return NULL;
 
     // the left child of the sub-tree root is now the parent node
     cnode->left = root;
@@ -89,7 +89,7 @@ tNode* rotateRight(tNode* root) {
     tNode* temp = cnode->right; // temp value to store the right child of the left child of the root to be rotated
 
     // if the root of the sub-tree to be rotated is NULL, it does not exist so we just return NULL.
-    //if (cnode == NULL) return NULL;
+    if (cnode == NULL) return NULL;
 
     // the left child of the sub-tree root is now the parent node
     cnode->right = root;
