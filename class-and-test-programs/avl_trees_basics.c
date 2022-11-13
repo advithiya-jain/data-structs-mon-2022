@@ -261,9 +261,7 @@ tNode* deleteAVL(tNode* root, int se)
             tNode* temp = root->right ? root->right : root->left;
             // If the temporary node is NULL, then we have no children
             if (temp == NULL) {
-                // set the temp node to the root
-                temp = root;
-                // set the root to NULL
+                // so we set the root to NULL for deletion
                 root = NULL;
             }
             // Else we have only 1 child, so we copy the data of the child to the root
