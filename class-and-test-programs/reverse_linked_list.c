@@ -94,6 +94,9 @@ preliminary Algorithm:
 */
 Node* reverseLinkedList(Node **head_addr) {
     // initialising nodeType variables
+
+    if ((*head_addr) == NULL) return NULL;
+
     Node* prevNode = NULL;
     Node* nextNode = NULL;
     Node* currentNode = *head_addr;
