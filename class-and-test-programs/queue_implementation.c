@@ -143,9 +143,10 @@ void printArray(int* a, int n) {
 */
 void printQueue(queue* q) {
     int val;
-    while(q->head){
-        val = dequeue(q);
-        printf(isEmpty(q)?"%d":"%d->", val);
+    queue* temp = q;
+    while(temp->head){
+        val = dequeue(temp);
+        printf(isEmpty(q)?"%d":"%d<-", val);
     }
     //printf("\b");
     printf(" :DD\n");
@@ -171,12 +172,12 @@ int main(int argc, char** argv) {
     // generating the queue to be tested
     queue* q = queueFromArray(a, n);
     // dequeueing values by printing to test
-    printf("\nYour generated queue is: ");
+    printf("\nYour generated (dequeued) queue is: ");
     printQueue(q);
     // generating a reversed version of the array into a queue
     q = queueFromArrayReverse(a, n);
     // printing the reversed queue
-    printf("\nYour (array) reversed version of the queue is: ");
+    printf("\nYour (array) reversed version of the (dequeued) queue is: ");
     printQueue(q);
 
     free(q);
