@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include<time.h>
+#include <time.h>
 
 /**
  * ! struct for the Red-Black Tree node
@@ -29,13 +29,12 @@ void insert(Node** root, int key, long int value);	   // inserts a new node into
 void rotateLeft(Node** root, Node *node);			   // rotates the tree to the left
 void rotateRight(Node** root, Node *node);			   // rotates the tree to the right
 Node* search(Node* root, int key);					   // searches for a node in the tree
-Node* delete (Node* root, int key);					   // deletes a node from the tree
-Node* deleteFix(Node* root, Node *node);			   // fixes the tree after deletion
-Node* successor(Node* node);						   // finds the successor of a node
-Node* predecessor(Node* node);						   // finds the predecessor of a node
+bool update(Node* root, int key, long int value);	   // updates the value of a node in the tree
 
-Node* createNode(int key, long int value)
-{
+/**
+ * ! Helper function to create a new node
+*/
+Node* createNode(int key, long int value) {
 	Node *temp = (Node *)malloc(sizeof(Node));
 	temp->key = key;
 	temp->value = value;
@@ -53,8 +52,7 @@ Node* createNode(int key, long int value)
  * @param value is the value the key is mapped to
  * @return the root of the tree
  */
-Node *bst_insert(Node *root, Node* node)
-{
+Node *bst_insert(Node *root, Node* node) {
 	if (!root) return node;
 	
 	if (node->key < root->key) {
@@ -73,8 +71,7 @@ Node *bst_insert(Node *root, Node* node)
 /**
  * ! Function to rotate a given node to the left
  */
-void rotateLeft(Node** root, Node *node)
-{
+void rotateLeft(Node** root, Node *node) {
 	Node *right = node->right;
 	node->right = right->left;
 
@@ -96,8 +93,7 @@ void rotateLeft(Node** root, Node *node)
 /**
  * ! Function to rotate a given node to the right
  */
-void rotateRight(Node** root, Node *node)
-{
+void rotateRight(Node** root, Node *node) {
 	Node *left = node->left;
 	node->left = left->right;
 
@@ -118,8 +114,7 @@ void rotateRight(Node** root, Node *node)
 /**
  * ! Function to fix the tree after insertion
  */
-void insertFix(Node **root, Node *node)
-{
+void insertFix(Node **root, Node *node) {
 	Node *parent = NULL;
 	Node *grandparent = NULL;
 
@@ -220,16 +215,39 @@ void insert(Node **root, int key, long int value) {
 	insertFix(root, temp);
 }
 
-void inorder(struct node* node)
-{
+/**
+ * ! Function to search for a given key in the tree
+*/
+Node* search(Node* root, int key) {
+	
+	if(root){
+		if (key < root->key) 	  return search(root->left, key);
+		else if (key > root->key) return search(root->right, key);
+		else 					  return root;
+	}
+	else return NULL;
+}
+
+/**
+ * ! Function to update the value of a given key in the tree
+*/
+bool update(Node* root, int key, long int value) {
+	Node* node = search(root, key);
+	if (node) {
+		node->value = value;
+		return true;
+	}
+	else return false;
+}
+
+void inorder(struct node* node) {
 	if (!node) return;
 	inorder(node->left);
 	printf("%d - %ld - %d\n", node->key, node->value, node->color);
 	inorder(node->right);
 }
 
-void preorder(struct node* node)
-{
+void preorder(struct node* node) {
 	if (!node) return;
 	printf("%d - %ld - %d\n", node->key, node->value, node->color);
 	preorder(node->left);
@@ -250,5 +268,18 @@ int main(int argc, char** argv) {
 		insert(&root, key, value);
 	}
 	printf("\n");
-	inorder(root);
+	preorder(root);
+	printf("\n");
+	Node* temp = search(root, 10);
+	printf("\n");
+	if(temp) printf("%d - %ld - %d\n", temp->key, temp->value, temp->color);
+	else printf("Not found\n");
+	printf("\n");
+	if (update(root, 10, 100)) printf("Updated value of 10 to 100\n");
+	else printf("Not found\n");
+	printf("\n");
+	temp = search(root, 10);
+	if(temp) printf("%d - %ld - %d\n", temp->key, temp->value, temp->color);
+	else printf("Not found\n");
+
 }
