@@ -3,10 +3,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include "rbtsf.h"
+#include "rbtree.h"
 
 /**
  * ! Helper function to create a new node
+ * @param key is the key of the node
+ * @param value is the value the key is mapped to
 */
 Node* createNode(int key, long int value) {
 	Node *temp = (Node *)malloc(sizeof(Node));
@@ -26,8 +28,11 @@ Node* createNode(int key, long int value) {
  * @param value is the value the key is mapped to
  * @return the root of the tree
  */
-Node *bst_insert(Node *root, Node* node) {
-	if (!root) return node;
+Node* bst_insert(Node *root, Node* node) {
+
+	// performing normal BST insertion
+	// code used and slightly modified from https://github.com/advithiya-jain/data-structs-mon-2022/blob/6b387289717897f7fc7e924de15820fbf6a98a8f/class-and-test-programs/binary_search_tree_basics.c 
+ 	if (!root) return node;
 	
 	if (node->key < root->key) {
 		root->left = bst_insert(root->left, node);
@@ -44,56 +49,76 @@ Node *bst_insert(Node *root, Node* node) {
 
 /**
  * ! Function to rotate a given node to the left
+ * @param root is the root of the tree
+ * @param node is the node to be rotated
+ * @return void
  */
 void rotateLeft(Node** root, Node *node) {
-	Node *right = node->right;
-	node->right = right->left;
-
+	
+	Node *rightChild = node->right; // set the right child of the passed node to the rightChild variable
+	node->right = rightChild->left; // set the left child of the rightChild to the right child of the passed node
+	// if the right child of the node is not null, set the parent of the right child of the node to the passwd node
 	if (node->right) node->right->parent = node;
+	// we then set the parent of the rightChild to the parent of the passed node
+	rightChild->parent = node->parent;
+	// if the parent of the passed node is null, we set the root to the rightChild
+	if (!node->parent) *root = rightChild;
+	// else, if the passed node is the left child of the parent, 
+	// we set the left child of the parent to the rightChild
+	else if (node == node->parent->left) node->parent->left = rightChild;
+	// else, we set the right child of the parent to the rightChild
+	else node->parent->right = rightChild;
 
-	right->parent = node->parent;
+	// Finally, we set the left child of the rightChild to the passed node
+	rightChild->left = node;
+	// and set the parent of the passed node to the rightChild, successfully rotating the node to the left
+	node->parent = rightChild;
 
-	if (!node->parent) *root = right;
-
-	else if (node == node->parent->left) node->parent->left = right;
-
-	else node->parent->right = right;
-
-	right->left = node;
-	node->parent = right;
 
 }
 
 /**
  * ! Function to rotate a given node to the right
+ * @param root is the root of the tree
+ * @param node is the node to be rotated
+ * @return void
  */
 void rotateRight(Node** root, Node *node) {
-	Node *left = node->left;
-	node->left = left->right;
 
+	Node *leftChild = node->left; // set the left child of the passed node to the leftChild variable
+	node->left = leftChild->right; // set the right child of the leftChild to the left child of the passed node
+	// if the left child of the node is not null, set the parent of the left child of the node to the passwd node
 	if (node->left) node->left->parent = node;
+	// we then set the parent of the leftChild to the parent of the passed node
+	leftChild->parent = node->parent;
+	// if the parent of the passed node is null, we set the root to the leftChild
+	if (!node->parent) *root = leftChild;
+	// else, if the passed node is the left child of the parent,
+	// we set the left child of the parent to the leftChild
+	else if (node == node->parent->left) node->parent->left = leftChild;
+	// else, we set the right child of the parent to the leftChild
+	else node->parent->right = leftChild;
 
-	left->parent = node->parent;
-
-	if (!node->parent) *root = left;
-
-	else if (node == node->parent->left) node->parent->left = left;
-
-	else node->parent->right = left;
-
-	left->right = node;
-	node->parent = left;
+	// Finally, we set the right child of the leftChild to the passed node
+	leftChild->right = node;
+	// and set the parent of the passed node to the leftChild, successfully rotating the node to the right
+	node->parent = leftChild;
 }
 
 /**
  * ! Function to fix the tree after insertion
+ * @param root is an address to the root pointer of the tree
+ * @param node is the node that was inserted
+ * @return void
  */
 void insertFix(Node **root, Node *node) {
 	Node *parent = NULL;
 	Node *grandparent = NULL;
 
+	// loop that runs until the node is the root or the node is black or the parent of the node is black
 	while ((node != (*root)) && (node->color != 0) && (node->parent->color == 1)) {
 
+		// initialize the parent and grandparent nodes
 		parent = node->parent;
 		grandparent = node->parent->parent;
 
@@ -176,24 +201,38 @@ void insertFix(Node **root, Node *node) {
 
 	// We set the root node to black to maintain the rules of a red-black tree (root is always black)
 	(*root)->color = 0;
-
-	// finally we return the root node
 }
 
 /**
  * ! Function to insert a new node into the tree
+ * @param root is an address to the root pointer of the tree
+ * @param key is the key of the new node
+ * @param value is the value of the new node
+ * @return void
  */
 void insert(Node **root, int key, long int value) {
-	Node* temp = createNode(key, value);
+	// This uses the bst_insert function to insert the node into the tree
+	// and then calls the insertFix function to fix the tree
+
+	Node* temp = createNode(key, value); // since we need the new node that we are inserting for the fix,
+										 // we create it within this function itself
+	// insert the node into the tree
 	(*root) = bst_insert((*root), temp);
+	// and finally fix the tree
 	insertFix(root, temp);
 }
 
 /**
  * ! Function to search for a given key in the tree
+ * @param root is the root node of the tree
+ * @param key is the key to search for
+ * @return the node with the given key if found, NULL otherwise
 */
 Node* search(Node* root, int key) {
 	
+	// performing normal BST search
+	// code used from: https://github.com/advithiya-jain/data-structs-mon-2022/blob/6b387289717897f7fc7e924de15820fbf6a98a8f/class-and-test-programs/binary_search_tree_basics.c
+
 	if(root){
 		if (key < root->key) 	  return search(root->left, key);
 		else if (key > root->key) return search(root->right, key);
@@ -204,8 +243,17 @@ Node* search(Node* root, int key) {
 
 /**
  * ! Function to update the value of a given key in the tree
+ * @param root is the root node of the tree
+ * @param key is the key to search for
+ * @param value is the new value to update
+ * @return true if the key was found and updated, false otherwise
 */
 bool update(Node* root, int key, long int value) {
+
+	// This function takes the returned node from the search function and then updates the value.
+	// If the node is not null, we update the value and return true.
+	// If the node is null, we return false, as this means the key was not found in the tree.
+
 	Node* node = search(root, key);
 	if (node) {
 		node->value = value;
@@ -214,16 +262,21 @@ bool update(Node* root, int key, long int value) {
 	else return false;
 }
 
-void inorder(struct node* node) {
-	if (!node) return;
-	inorder(node->left);
-	printf("%d - %ld - %d\n", node->key, node->value, node->color);
-	inorder(node->right);
+void preorder(Node* root) {
+	if(root->left) preorder(root->left);       
+	if(root) printf("%d - %ld - %d", root->key, root->value, root->color);
+	if(root->right) preorder(root->right);
 }
 
-void preorder(struct node* node) {
-	if (!node) return;
-	printf("%d - %ld - %d\n", node->key, node->value, node->color);
-	preorder(node->left);
-	preorder(node->right);
+/**
+ * ! Function to free the memory allocated to a tree
+ * @param root is the address to the root pointer of the tree
+ * @return void
+*/
+void freeTree(Node** root) {
+	if (!(*root)) return;
+
+	freeTree(&((*root)->left));
+	freeTree(&((*root)->right));
+	free((*root));
 }
