@@ -18,25 +18,23 @@ typedef struct node
 	struct node *parent; // parent of the node
 } Node;
 
-Node* root = NULL; // root of the tree
-
 /**
  * ! Defining all the functions to be used for the Red-Black Tree
  */
 Node *createNode(int key, long int value);			   // creates a new node
-Node *bst_insert(Node* temp, Node* node); // inserts a new node into the tree using normal BST insertion
-void insertFix(Node* root, Node *node);			   // fixes the tree after insertion
-void insert(int key, long int value);	   // inserts a new node into the tree and fixes the tree
+Node *bst_insert(Node* root, Node* node); // inserts a new node into the tree using normal BST insertion
+void insertFix(Node** root, Node *node);			   // fixes the tree after insertion
+void insert(Node** root, int key, long int value);	   // inserts a new node into the tree and fixes the tree
 													   // ( Wrapper that uses the above two functions)
-void rotateLeft(Node* node);			   // rotates the tree to the left
-void rotateRight(Node* node);			   // rotates the tree to the right
+void rotateLeft(Node** root, Node *node);			   // rotates the tree to the left
+void rotateRight(Node** root, Node *node);			   // rotates the tree to the right
 Node* search(Node* root, int key);					   // searches for a node in the tree
 Node* delete (Node* root, int key);					   // deletes a node from the tree
 Node* deleteFix(Node* root, Node *node);			   // fixes the tree after deletion
 Node* successor(Node* node);						   // finds the successor of a node
 Node* predecessor(Node* node);						   // finds the predecessor of a node
 
-Node *createNode(int key, long int value)
+Node* createNode(int key, long int value)
 {
 	Node *temp = (Node *)malloc(sizeof(Node));
 	temp->key = key;
@@ -55,36 +53,36 @@ Node *createNode(int key, long int value)
  * @param value is the value the key is mapped to
  * @return the root of the tree
  */
-Node *bst_insert(Node *temp, Node* node)
+Node *bst_insert(Node *root, Node* node)
 {
-	if (!temp) return node;
+	if (!root) return node;
 	
-	if (node->key < temp->key) {
-		temp->left = bst_insert(temp->left, node);
-		temp->left->parent = temp;
+	if (node->key < root->key) {
+		root->left = bst_insert(root->left, node);
+		root->left->parent = root;
 	}
 
-	else if (node->key > temp->key) {
-		temp->right = bst_insert(temp->right, node);
-		temp->right->parent = temp;
+	else if (node->key > root->key) {
+		root->right = bst_insert(root->right, node);
+		root->right->parent = root;
 	}
 
-	return temp;
+	return root;
 }
 
 /**
  * ! Function to rotate a given node to the left
  */
-void rotateLeft(Node *node)
+void rotateLeft(Node** root, Node *node)
 {
-	Node* right = node->right;
+	Node *right = node->right;
 	node->right = right->left;
 
 	if (node->right) node->right->parent = node;
 
 	right->parent = node->parent;
 
-	if (!node->parent) root = right;
+	if (!node->parent) *root = right;
 
 	else if (node == node->parent->left) node->parent->left = right;
 
@@ -98,7 +96,7 @@ void rotateLeft(Node *node)
 /**
  * ! Function to rotate a given node to the right
  */
-void rotateRight( Node *node)
+void rotateRight(Node** root, Node *node)
 {
 	Node *left = node->left;
 	node->left = left->right;
@@ -107,7 +105,7 @@ void rotateRight( Node *node)
 
 	left->parent = node->parent;
 
-	if (!node->parent) root = left;
+	if (!node->parent) *root = left;
 
 	else if (node == node->parent->left) node->parent->left = left;
 
@@ -120,12 +118,12 @@ void rotateRight( Node *node)
 /**
  * ! Function to fix the tree after insertion
  */
-void insertFix(Node *root, Node *node)
+void insertFix(Node **root, Node *node)
 {
 	Node *parent = NULL;
 	Node *grandparent = NULL;
 
-	while ((node != root) && (node->color != 0) && (node->parent->color == 1)) {
+	while ((node != (*root)) && (node->color != 0) && (node->parent->color == 1)) {
 
 		parent = node->parent;
 		grandparent = node->parent->parent;
@@ -151,7 +149,7 @@ void insertFix(Node *root, Node *node)
 				// If the node is the right child of the parent node when the uncle is black, 
 				// we have to rotate the tree to the left at the parent node to maintain the tree balance.
 				if (node == parent->right) {
-					rotateLeft(parent);
+					rotateLeft(root, parent);
 					// After rotation we set the node to the parent node
 					node = parent;
 					// and the parent node to the grandparent node 
@@ -160,7 +158,7 @@ void insertFix(Node *root, Node *node)
 
 				// Situation where the node is the left child of the parent node when the uncle is black, 
 				// we rotate the tree to the right at the grandparent node as the uncle is black
-				rotateRight(grandparent);
+				rotateRight(root, grandparent);
 
 				// then swap the colors of the parent and grandparent nodes after rotation
 				int temp = parent->color;
@@ -189,14 +187,14 @@ void insertFix(Node *root, Node *node)
 			else {
 				// same as the previous situation where the uncle node is black, except we rotate the tree to the right
 				if (node == parent->left) {
-					rotateRight(parent);
+					rotateRight(root, parent);
 					node = parent;
 					parent = node->parent;
 				}
 
 				// If the node is the right child of the parent node, 
 				// then we rotate the tree to the left at the grandparent node
-				rotateLeft(grandparent);
+				rotateLeft(root, grandparent);
 
 				// then swap the colors of the parent and grandparent nodes after rotation
 				int temp = parent->color;
@@ -208,7 +206,7 @@ void insertFix(Node *root, Node *node)
 	}
 
 	// We set the root node to black to maintain the rules of a red-black tree (root is always black)
-	root->color = 0;
+	(*root)->color = 0;
 
 	// finally we return the root node
 }
@@ -216,9 +214,9 @@ void insertFix(Node *root, Node *node)
 /**
  * ! Function to insert a new node into the tree
  */
-void insert(int key, long int value) {
+void insert(Node **root, int key, long int value) {
 	Node* temp = createNode(key, value);
-	root = bst_insert(root, temp);
+	(*root) = bst_insert((*root), temp);
 	insertFix(root, temp);
 }
 
@@ -243,15 +241,13 @@ int main(int argc, char** argv) {
 	int key;
 	long int value;
 	srand(time(NULL));
-	int a[8] = {7, 3, 18, 10, 22, 8, 11, 26};
-	int n = 8;
-	for(int i = 0; i < n; i++) {
+	int a[] = {7, 3, 18, 10, 22, 8, 11, 26};
+
+	for(int i = 0; i < 8; i++) {
 		key = a[i];
 		value = rand() % 100;
 		printf("\n Inserting %d - %ld\n", key, value);
-		Node* temp = createNode(key, value);
-		root = bst_insert(root, temp);
-		insertFix(root, temp);
+		insert(&root, key, value);
 	}
 	printf("\n");
 	inorder(root);
