@@ -3,33 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-
-/**
- * ! struct for the Red-Black Tree node
- * * enclosed in a typedef for easier referencing
- */
-typedef struct node
-{
-	int key;			 // key of the node
-	int color;			 // colour of the node. 1 for red and 0 for black
-	long int value;		 // value the key is mapped to
-	struct node *left;	 // left child of the node
-	struct node *right;	 // right child of the node
-	struct node *parent; // parent of the node
-} Node;
-
-/**
- * ! Defining all the functions to be used for the Red-Black Tree
- */
-Node *createNode(int key, long int value);			   // creates a new node
-Node *bst_insert(Node* root, Node* node); // inserts a new node into the tree using normal BST insertion
-void insertFix(Node** root, Node *node);			   // fixes the tree after insertion
-void insert(Node** root, int key, long int value);	   // inserts a new node into the tree and fixes the tree
-													   // ( Wrapper that uses the above two functions)
-void rotateLeft(Node** root, Node *node);			   // rotates the tree to the left
-void rotateRight(Node** root, Node *node);			   // rotates the tree to the right
-Node* search(Node* root, int key);					   // searches for a node in the tree
-bool update(Node* root, int key, long int value);	   // updates the value of a node in the tree
+#include "rbtsf.h"
 
 /**
  * ! Helper function to create a new node
@@ -252,34 +226,4 @@ void preorder(struct node* node) {
 	printf("%d - %ld - %d\n", node->key, node->value, node->color);
 	preorder(node->left);
 	preorder(node->right);
-}
-
-int main(int argc, char** argv) {
-	Node* root = NULL;
-	int key;
-	long int value;
-	srand(time(NULL));
-	int a[] = {7, 3, 18, 10, 22, 8, 11, 26};
-
-	for(int i = 0; i < 8; i++) {
-		key = a[i];
-		value = rand() % 100;
-		printf("\n Inserting %d - %ld\n", key, value);
-		insert(&root, key, value);
-	}
-	printf("\n");
-	preorder(root);
-	printf("\n");
-	Node* temp = search(root, 10);
-	printf("\n");
-	if(temp) printf("%d - %ld - %d\n", temp->key, temp->value, temp->color);
-	else printf("Not found\n");
-	printf("\n");
-	if (update(root, 10, 100)) printf("Updated value of 10 to 100\n");
-	else printf("Not found\n");
-	printf("\n");
-	temp = search(root, 10);
-	if(temp) printf("%d - %ld - %d\n", temp->key, temp->value, temp->color);
-	else printf("Not found\n");
-
 }
