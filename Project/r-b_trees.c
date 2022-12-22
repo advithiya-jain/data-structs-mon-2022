@@ -10,7 +10,7 @@
  * @param key is the key of the node
  * @param value is the value the key is mapped to
 */
-Node* createNode(int key, long int value) {
+Node* createNode(int key, int value) {
 	Node *temp = (Node *)malloc(sizeof(Node));
 	temp->key = key;
 	temp->value = value;
@@ -210,7 +210,7 @@ void insertFix(Node **root, Node *node) {
  * @param value is the value of the new node
  * @return void
  */
-void insert(Node **root, int key, long int value) {
+void insert(Node **root, int key, int value) {
 	// This uses the bst_insert function to insert the node into the tree
 	// and then calls the insertFix function to fix the tree
 
@@ -228,15 +228,15 @@ void insert(Node **root, int key, long int value) {
  * @param key is the key to search for
  * @return the node with the given key if found, NULL otherwise
 */
-Node* search(Node* root, int key) {
+Node* search(Node** root, int key) {
 	
 	// performing normal BST search
 	// code used from: https://github.com/advithiya-jain/data-structs-mon-2022/blob/6b387289717897f7fc7e924de15820fbf6a98a8f/class-and-test-programs/binary_search_tree_basics.c
 
-	if(root){
-		if (key < root->key) 	  return search(root->left, key);
-		else if (key > root->key) return search(root->right, key);
-		else 					  return root;
+	if(*root){
+		if (key < (*root)->key) 	 return search(&((*root)->left), key);
+		else if (key > (*root)->key) return search(&((*root)->right), key);
+		else 					  	 return *root;
 	}
 	else return NULL;
 }
@@ -248,7 +248,7 @@ Node* search(Node* root, int key) {
  * @param value is the new value to update
  * @return true if the key was found and updated, false otherwise
 */
-bool update(Node* root, int key, long int value) {
+bool update(Node** root, int key, int value) {
 
 	// This function takes the returned node from the search function and then updates the value.
 	// If the node is not null, we update the value and return true.
@@ -264,7 +264,7 @@ bool update(Node* root, int key, long int value) {
 
 void preorder(Node* root) {
 	if(root->left) preorder(root->left);       
-	if(root) printf("%d - %ld - %d", root->key, root->value, root->color);
+	if(root) printf("%d - %d - %d", root->key, root->value, root->color);
 	if(root->right) preorder(root->right);
 }
 

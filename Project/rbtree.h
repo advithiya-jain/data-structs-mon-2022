@@ -9,7 +9,7 @@ typedef struct node
 {
 	int key;			 // key of the node
 	int color;			 // colour of the node. 1 for red and 0 for black
-	long int value;		 // value the key is mapped to
+	int value;		 // value the key is mapped to
 	struct node *left;	 // left child of the node
 	struct node *right;	 // right child of the node
 	struct node *parent; // parent of the node
@@ -18,15 +18,15 @@ typedef struct node
 /**
  * ! Defining all the functions to be used for the Red-Black Tree
  */
-Node* createNode(int key, long int value);			   // creates a new node
+Node* createNode(int key, int value);			   // creates a new node
 Node* bst_insert(Node* root, Node* node);              // inserts a new node into the tree using normal BST insertion
 void insertFix(Node** root, Node *node);			   // fixes the tree after insertion
-void insert(Node** root, int key, long int value);	   // inserts a new node into the tree and fixes the tree
+void insert(Node** root, int key, int value);	   // inserts a new node into the tree and fixes the tree
 													   // ( Wrapper that uses the above two functions)
 void rotateLeft(Node** root, Node *node);			   // rotates the tree to the left
 void rotateRight(Node** root, Node *node);			   // rotates the tree to the right
-Node* search(Node* root, int key);					   // searches for a node in the tree
-bool update(Node* root, int key, long int value);	   // updates the value of a node in the tree
+Node* search(Node** root, int key);					   // searches for a node in the tree
+bool update(Node** root, int key, int value);	   // updates the value of a node in the tree
 void freeTree(Node** root);							   // frees a tree
 void preorder(struct node* node);                      // prints the tree in preorder traversal
 
