@@ -19,10 +19,37 @@ int max_attr[11][2] = {{0, 100}, {1, 300}, {2, 100}, {3, 6}, {4, 50}, {5, 100}, 
 void fight_monster(Node** player_values, Node* set_max_values, int* deaths) {
     int opt, miss = 0;
     int sword_dur, claymore_dur, wand_dur, spear_dur, health_pots, health, repair_pots, weapon_dur;
+	char* input = malloc(sizeof(char) * 10);
 
     if(isDead(player_values)) {
         *deaths++; return;
     }
+	if(search(player_values, 10)->value <= 0) {
+		printf("You have defeated the monster!\n");
+		int xp = search(player_values, 2)->value;
+        int health = search(player_values, 1)->value;
+		xp = xp + 50;
+		if(xp >= search(&set_max_values, 2)->value) {
+			update(player_values, 0, (search(player_values, 0)->value + 1));
+			update (player_values, 2, 0);
+		}
+        else update(player_values, 2, xp);
+        update(player_values, 1, health + 10);
+        int level = search(player_values, 0)->value;
+		int monster_health = search(&set_max_values, 10)->value + (level * 25);
+		update(player_values, 10, monster_health);
+        if(randomiser(40)){
+            int health_pots = search(player_values, 8)->value;
+            update(player_values, 8, health_pots + 1);
+            printf("You have gained 1 health potion!\n");
+        }
+        if(randomiser(40)){
+            int repair_pots = search(player_values, 9)->value;
+            update(player_values, 9, repair_pots + 1);
+            printf("You have gained 1 repair potion!\n");
+        }
+        base_game(player_values, set_max_values, deaths);
+	}
     printf("Monster Health: %d\n", search(player_values, 10)->value);
     printf("Please enter your option:\n");
     printf("1. Sword\n");
@@ -33,7 +60,8 @@ void fight_monster(Node** player_values, Node* set_max_values, int* deaths) {
     printf("6. Repair potion\n");
     printf("7. View your stats\n");
     printf("8. Exit\n\n");
-    scanf("%d", &opt);
+    scanf("%s", input);
+	opt = atoi(input);
     switch (opt) {
 
         case 1: 
@@ -122,7 +150,7 @@ void fight_monster(Node** player_values, Node* set_max_values, int* deaths) {
                 
                 health = search(player_values, 1)->value;
 				health += 50;
-				if(health > 300) health = search(set_max_values, 1)->value;
+				if(health > 300) health = search(&set_max_values, 1)->value;
                 update(player_values, 1, health);
                 update(player_values, 8, health_pots - 1);
                 printf("You have used a health potion and healed 50 health!\n");
@@ -136,8 +164,8 @@ void fight_monster(Node** player_values, Node* set_max_values, int* deaths) {
 				for (int i = 4; i < 8; i++) {
 					weapon_dur = search(player_values, i)->value;
 					weapon_dur += 20;
-					if(weapon_dur > search(set_max_values, i)->value) {
-						weapon_dur = search(set_max_values, i)->value;
+					if(weapon_dur > search(&set_max_values, i)->value) {
+						weapon_dur = search(&set_max_values, i)->value;
 					}
 					update(player_values, i, weapon_dur);
 				}
@@ -167,8 +195,10 @@ void fight_monster(Node** player_values, Node* set_max_values, int* deaths) {
         }
     
     if (miss == 1) {
-        update(player_values, 1, health - 25);
-        printf("The monster has hit you for 25 damage!\n");
+		int level = search(player_values, 0)->value;
+		int damage = (level * 20) + 5;
+        update(player_values, 1, damage);
+        printf("The monster has hit you for %d damage!\n", damage);
         health = search(player_values, 1)->value;
         if(health <= 0){
             *deaths++;
@@ -179,11 +209,18 @@ void fight_monster(Node** player_values, Node* set_max_values, int* deaths) {
 
     else if(search(player_values, 10)->value <= 0){
         printf("You have defeated the monster!\n");
-        int xp = search(player_values, 2)->value;
+		int xp = search(player_values, 2)->value;
         int health = search(player_values, 1)->value;
-        update(player_values, 2, xp + 50);
+		xp = xp + 50;
+		if(xp >= search(&set_max_values, 2)->value) {
+			update(player_values, 0, (search(player_values, 0)->value + 1));
+			update (player_values, 2, 0);
+		}
+        else update(player_values, 2, xp);
         update(player_values, 1, health + 10);
-        update(player_values, 10, 200);
+        int level = search(player_values, 0)->value;
+		int monster_health = search(&set_max_values, 10)->value + (level * 25);
+		update(player_values, 10, monster_health);
         if(randomiser(40)){
             int health_pots = search(player_values, 8)->value;
             update(player_values, 8, health_pots + 1);
@@ -201,6 +238,7 @@ void fight_monster(Node** player_values, Node* set_max_values, int* deaths) {
 
 void base_game(Node** player_values, Node* set_max_values, int* deaths) {
     int opt; int rest = 0;
+	char* input = malloc(10 * sizeof(char));
     if(isDead(player_values)) {
 		*deaths++; return;
 	}
@@ -209,8 +247,10 @@ void base_game(Node** player_values, Node* set_max_values, int* deaths) {
     printf("1. Fight a monster\n");
     printf("2. Rest\n");
     printf("3. View your stats\n");
-    printf("4. Exit\n\n");
-    scanf("%d", &opt);
+	printf("4. View deaths\n");
+    printf("5. Exit\n\n");
+    scanf("%s", input);
+	opt = atoi(input);
     switch (opt) {
         case 1: fight_monster(player_values, set_max_values, deaths);
                 if (isDead(player_values)) return;
@@ -228,9 +268,14 @@ void base_game(Node** player_values, Node* set_max_values, int* deaths) {
         case 3: viewStats(*player_values);
                 base_game(player_values, set_max_values, deaths);
                 break;
-        case 4:
-            printf("Exiting to main menu...\n");
-            return;
+		
+		case 4: printf("You have died %d times\n", *deaths);
+				base_game(player_values, set_max_values, deaths);
+				break;
+
+        case 5:
+            printf("Exiting... Thank you for playing!\n");
+            exit(0);
             break;
         default:
             printf("Invalid option, please try again\n");
@@ -254,15 +299,16 @@ int main(int argc, char** argv) {
 	int deaths = 0;
 	int flag = 0;
 	char* input = (char*)malloc(50*sizeof(char));
+	int usr_option;
 	int choice;
 	
 	do {
 		Node* temp = search(&player_values, 1);
 		if (temp->value <= 0) {
-			deaths++;
 			printf("You died! Would you like to restart the game? (1 = yes/ anything else = no)\n");
-			scanf("%s", &input);
-			if (input == 'y') {
+			scanf("%s", input);
+			usr_option = atoi(input);
+			if (usr_option == 1) {
 				flag = 0;
 				// reset player values
 				initPlayerValues(&player_values, max_attr);
@@ -277,10 +323,10 @@ int main(int argc, char** argv) {
 			}
 		}
 		else {
-			welcome(input, deaths);
+			welcome(usr_option);
 			printf("Enter your choice: ");
-			scanf("%d", &choice);
-
+			scanf("%s", input);
+			choice = atoi(input);
 			switch (choice) {
 				case 1:
 					tutorial();
@@ -288,6 +334,24 @@ int main(int argc, char** argv) {
 				case 2: viewStats(player_values);
 						break;
 				case 3: base_game(&player_values, set_max_values, &deaths);
+						if(isDead(&player_values)){
+							printf("You died! Would you like to restart the game? (1 = yes/ anything else = no)\n");
+							scanf("%s", input);
+							usr_option = atoi(input);
+							if (usr_option == 1) {
+								flag = 0;
+								// reset player values
+								initPlayerValues(&player_values, max_attr);
+								continue;
+							}
+							else {
+								printf("Thank you for playing!\n");
+								flag = 1;
+								freeTree(&player_values);
+								freeTree(&set_max_values);
+								exit(0);
+							}
+						}
 						break;
 
 				case 4: printf("Thank you for playing!\n");
@@ -295,9 +359,6 @@ int main(int argc, char** argv) {
 						freeTree(&player_values);
 						freeTree(&set_max_values);
 						exit(0);
-						break;
-
-				case 5: printf("You have died %d times.\n", deaths);
 						break;
 				default:
 					printf("Invalid input, please try again.\n");

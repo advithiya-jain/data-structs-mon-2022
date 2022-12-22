@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include<time.h>
 #include<stdbool.h>
+#include<ctype.h>
+#include<string.h>
 #include "rbtree.h"
 #include "gamefns.h"
 
@@ -35,16 +37,15 @@ void initPlayerValues(Node** player_values, int max_attr[11][2]) {
     insert(player_values, 10, 200); // monster health
 }
 
-void welcome(char input, int deaths){
+void welcome(int input){
 
 	printf("Welcome to this basic game, right now you have the current options available: \n");
 
-	if (input == 'y' || input == 'Y') {
+	if (input == 1) {
 		printf("1. Tutorial\n");
 		printf("2. View your stats\n");
 		printf("3. Play the game!\n");
 		printf("4. Exit\n");
-		if (deaths > 0)	printf("5. View deaths\n");
 	}
 }
 
@@ -94,4 +95,34 @@ bool randomiser(int chance){
     int random = rand() % 100 + 1;
     if (random <= chance) return true;
     else return false;
+}
+
+// Function to check whether the entered string contains only integers.
+int isNum(char str[]) {
+    int i = 0;
+    int len = strlen(str);
+
+    // Avoiding working on whitespaces and other special space characters like \n, \r, etc.
+    while (len > 0 && isspace(str[len - 1])) {
+        len--;
+    }
+    // If the length of the string is greater then 0 after checking for space characters then enter.
+    if(len > 0){
+        // Loop that runs through the input string and checks if each character is a digit or not.
+        for (i = 0; i < len; ++i) {
+            // isdigit() returns true if the character is a digit,
+            // so a ! is added in front to check if it is not one.
+            // 0 (false) is returned if any of the characters is not a digit.
+            if (!isdigit(str[i])) {
+               return 0;
+            }
+        }
+        // return 1 (true), only if the loop terminates successfully.
+        return 1;
+    }
+    // else return 0 which is essentially false.
+    else{
+        return 0;
+    }
+
 }
