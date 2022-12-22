@@ -72,13 +72,14 @@ void tutorial(){
 	printf("The options are: \n");
 	printf("1. Fight a monster\n");
 	printf("2. Rest\n");
-	printf("3. Use an item\n");
+    printf("3. View your stats\n");
+	printf("4. Exit\n");
 	printf("\n When you fight a monster (monster health is always 200) you have multiple items to choose from,\n");
 	printf("each item has a different outcome and have different durabilities, the items are: \n");
-	printf("1. Sword (durability: 50, damage: 25)\n");
-	printf("2. Claymore (durability: 100, damage: 50)\n");
-	printf("3. Wand (durability: 15, damage: 100)\n");
-	printf("4. Spear (durability: 25, damage: 75)\n");
+	printf("1. Sword (durability: 50, damage: 25, chance: 50%%)\n");
+	printf("2. Claymore (durability: 100, damage: 50, chance: 35%%)\n");
+	printf("3. Wand (durability: 15, damage: 100, chance: 75%%)\n");
+	printf("4. Spear (durability: 25, damage: 20, chance: 80%%)\n");
 	printf("5. Health potion (start with: 5)\n");
 	printf("6. Repair potion (start with: 5)\n");
 	printf("\nThe durability of each item decreases by 5 every time you use it.\n");
@@ -86,8 +87,12 @@ void tutorial(){
 	printf("until you repair it using a repair potion.\n");
 	printf("\nThe health potion restores 50 health and the repair potion restores 10 durability. There is no limit to how many of these you can hold.\n");
 	printf("Every time you defeat a monster you will gain 50 xp and 10 health. You also have a 40%% chance of getting 1 health potion as well as 1 repair potion.\n");
-	printf("\nWhen you rest you will gain 25 health and no xp. You also have a 20%% chance of getting the 2 potions mentioned before.\n");
+	printf("\nWhen you rest you will gain 25 health and no xp. There is no limit to your health.\n");
 	printf("You can only rest once in between fighting monsters. You cannot rest while fighting a monster.\n");
+    printf("\nWhen you use an item you will have a chance of winning the fight, if you win you will gain 50 xp and 10 health.\n");
+    printf("You will level up if your xp reaches 100. When you level up, the monsters you encounter will gain more health and will be harder to defeat.\n");
+    printf("So use your items wisely!\n");
+    printf("\nYou can view your stats at any time by pressing 3. If your health reaches 0 you die and the game will end.\n");
 	printf("\nThat's it! Enter any character(s) to go back to the main menu\n\n");
     scanf("%*s");
 

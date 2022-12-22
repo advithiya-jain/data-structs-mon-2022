@@ -283,7 +283,7 @@ void base_game(Node **player_values, Node *set_max_values, int *rest)
 	case 2: // if player has not rested yet
 			if (*rest == 0) {
 				int health = search(player_values, 1)->value;
-				update(player_values, 1, health + 10); // add 10 health
+				update(player_values, 1, health +25); // add 10 health
 				printf("You have rested and healed 10 health!\n");
 				*rest = 1;
 			}
