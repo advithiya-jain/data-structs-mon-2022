@@ -2,8 +2,8 @@ ___
 # Data Structures Final Project - A Turn based game using Red-Black Trees
 ___
 
-# Note:
-    This project is also available on my [git repo here](https://github.com/advithiya-jain/data-structs-mon-2022/tree/main/Project). If for any reason code within the zip file does not work, please download the files from here.
+# Note: 
+This project is also available on my [git repo here](https://github.com/advithiya-jain/data-structs-mon-2022/tree/main/Project). If for any reason code within the zip file does not work, please download the files from here.
 
 ## Implementations:
 1. Red-Black trees (r-b_trees.c, rbtrees.h) with:
