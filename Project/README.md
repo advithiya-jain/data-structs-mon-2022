@@ -7,9 +7,9 @@ This project is also available on my [git repo here](https://github.com/advithiy
 
 ## Implementations:
 1. Red-Black trees  (r-b_trees.c, rbtrees.h) with:
-    * Insertion
-    * Searching
-    * Updating
+    * Insertion - O(log n)
+    * Searching - O(log n)
+    * Updating  - O(log n)
     * [More Info on this Data Structure](https://www.geeksforgeeks.org/introduction-to-red-black-tree/)
 2. "Dictionary" which is the Red-Black tree with keys and values mapped to them.
 3. A working turn-based game (game.c, game_functions.c, gamefns.h) with a randomiser that uses the dictionary to keep track of player and enemy values. You will recieve all the instructions you need through the game to play/test it.
