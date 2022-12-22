@@ -7,6 +7,10 @@
 #include "rbtree.h"
 #include "gamefns.h"
 
+/**
+ * ! Function to check if the player is dead
+ * @param player_values is the tree containing the player's values
+*/
 bool isDead(Node** player_values){
     int health = search(player_values, 1)->value;
     if (health <= 0) {
@@ -15,6 +19,11 @@ bool isDead(Node** player_values){
     return false;
 }
 
+/**
+ * ! Function to initialise the max values of the player
+ * @param set_max_values is the tree to be initialised
+ * @param max_attr is the array containing the max values
+*/
 void initMaxValues(Node** set_max_values, int max_attr[11][2]) {
 	int key, value;
 	for (int i = 0; i < 11; i++) {
@@ -24,6 +33,11 @@ void initMaxValues(Node** set_max_values, int max_attr[11][2]) {
 	}
 }
 
+/**
+ * ! Function to initialise the player's values
+ * @param player_values is the tree to be initialised
+ * @param max_attr is the array containing the max values
+*/
 void initPlayerValues(Node** player_values, int max_attr[11][2]) {
 	insert(player_values, 0, 1); // level
 	insert(player_values, 1, 300); // health
@@ -37,18 +51,22 @@ void initPlayerValues(Node** player_values, int max_attr[11][2]) {
     insert(player_values, 10, 200); // monster health
 }
 
-void welcome(int input){
+/**
+ * ! Function to print the welcome message
+ * @param input is the input from the user
+*/
+void welcome(){
 
 	printf("Welcome to this basic game, right now you have the current options available: \n");
-
-	if (input == 1) {
-		printf("1. Tutorial\n");
-		printf("2. View your stats\n");
-		printf("3. Play the game!\n");
-		printf("4. Exit\n");
-	}
+    printf("1. Tutorial\n");
+    printf("2. View your stats\n");
+    printf("3. Play the game!\n");
+    printf("4. Exit\n");
 }
 
+/**
+ * ! Function to print the tutorial
+*/
 void tutorial(){
 	printf("This is a basic game, you have 4 options to choose from, each option will have a different outcome.\n");
 	printf("The options are: \n");
@@ -75,6 +93,10 @@ void tutorial(){
 
 }
 
+/**
+ * ! Function to print the player's stats
+ * @param player_values is the tree containing the player's values
+*/
 void viewStats(Node* player_values){
 	printf("\nLevel: %d\n", search(&player_values, 0)->value);
 	printf("Health: %d\n", search(&player_values, 1)->value);
@@ -91,38 +113,18 @@ void viewStats(Node* player_values){
 
 }
 
+/**
+ * ! Function that results a true result if the random number is less than or equal to the chance
+ * * The random number is between 1 and 100
+ * @param chance is % chance that is required, must be between 1 and 100
+*/
 bool randomiser(int chance){
     int random = rand() % 100 + 1;
     if (random <= chance) return true;
     else return false;
 }
 
-// Function to check whether the entered string contains only integers.
-int isNum(char str[]) {
-    int i = 0;
-    int len = strlen(str);
-
-    // Avoiding working on whitespaces and other special space characters like \n, \r, etc.
-    while (len > 0 && isspace(str[len - 1])) {
-        len--;
-    }
-    // If the length of the string is greater then 0 after checking for space characters then enter.
-    if(len > 0){
-        // Loop that runs through the input string and checks if each character is a digit or not.
-        for (i = 0; i < len; ++i) {
-            // isdigit() returns true if the character is a digit,
-            // so a ! is added in front to check if it is not one.
-            // 0 (false) is returned if any of the characters is not a digit.
-            if (!isdigit(str[i])) {
-               return 0;
-            }
-        }
-        // return 1 (true), only if the loop terminates successfully.
-        return 1;
-    }
-    // else return 0 which is essentially false.
-    else{
-        return 0;
-    }
-
+void death(){
+    printf("You died. Thank you for playing the game!\n");
+    exit(0);
 }

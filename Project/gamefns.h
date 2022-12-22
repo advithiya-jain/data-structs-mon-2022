@@ -4,14 +4,13 @@
 
 void initMaxValues(Node** set_max_values, int max_attr[11][2]);
 void initPlayerValues(Node** player_values, int max_attr[11][2]);
-void welcome(int input);
+void welcome();
 void tutorial();
 void viewStats(Node* player_values);
-void playGame(Node** player_values, int* deaths);
-void fightMonster(Node** player_values, Node* set_max_values, int* deaths);
-void base_game(Node** player_values, Node* set_max_values, int* deaths);
+void fightMonster(Node** player_values, Node* set_max_values, int* rest);
+void base_game(Node** player_values, Node* set_max_values, int* rest);
 bool isDead(Node** player_values);
+void death();
 bool randomiser(int chance);
-int isNum(char str[]);
 
 #endif
